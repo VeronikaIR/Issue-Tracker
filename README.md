@@ -33,7 +33,7 @@
 - `project_id`: идентификатор на проекта, където е свързана задачата
 - `assignee_id`: идентификатор на потребителя, на когото е назначена задачата
 
-<img width="830" alt="Screenshot 2023-04-18 at 23 22 46" src="/Users/rachevav/Desktop/Screenshot 2023-05-08 at 8.52.33.png">
+![img.png](diagram.png)
 
 
 # Как да стартираме
