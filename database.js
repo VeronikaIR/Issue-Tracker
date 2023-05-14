@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 
 async function loadMigrations() {
-    console.log('Executing migration file: ');
+
     // get all migration files from the migrations directory
     const migrationDir = path.join(__dirname, 'src/migrations');
     const migrationFiles = fs.readdirSync(migrationDir);

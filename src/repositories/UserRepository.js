@@ -22,15 +22,23 @@ class UserRepository {
         `;
         const values = [id];
         const {rows} = await db.pool.query(query, values);
+
         return new UserDto(rows[0].id, rows[0].name, rows[0].email);
     }
 
     async updateUserById(id, user) {
-        const result = await db.pool.query(
-            'UPDATE users SET name = $1, email = $2, hashed_password = $3 WHERE id = $4 RETURNING *',
-            [user.name, user.email, user.hashedPassword, id]
-        );
-        return new UserDto(result.rows[0].id, result.rows[0].name, result.rows[0].email);
+        const query = `
+            UPDATE users
+            SET name            = $1,
+                email           = $2,
+                hashed_password = $3
+            WHERE id = $4
+            RETURNING *
+        `;
+        const values = [user.name, user.email, user.hashedPassword, id];
+        const {rows} = await db.pool.query(query, values);
+
+        return new UserDto(rows[0].id, rows[0].name, rows[0].email);
     }
 
     async deleteUserById(id) {
@@ -41,7 +49,7 @@ class UserRepository {
             RETURNING *
         `;
         const values = [id];
-        const { rows } = await db.pool.query(query, values);
+        const {rows} = await db.pool.query(query, values);
         return new UserDto(rows[0].id, rows[0].name, rows[0].email);
     }
 }
