@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Issue Tracker Dashboard</title>
+    <link rel="stylesheet" href="styles/reset-css.css" type="text/css" />
+    <link rel="stylesheet" href="styles/style.css" type="text/css" />
+    <script defer src="utils/validate-utils.js"></script>
+    <script defer src="utils/create-utils.js"></script>
+    <script defer src="utils/message-utils.js"></script>
+    <script defer src="utils/update-utils.js"></script>
+    <script defer src="utils/show-utils.js"></script>
+    <script defer src="utils/filter-order-utils.js"></script>
+    <script defer src="script.js"></script>
+    <script defer src="tasks.js"></script>
+</head>
+
+
+<body>
+    <header id="top-bar">
+        <nav>
+            <a href='#'>Projects</a>
+            <a href='#'>Prod</a>
+            <a href='#'>Logout</a>
+        </nav>
+        <h1>Dashboard</h1>
+    </header>
+    <main>
+        <section class="order">
+            <label>Order by priority:</label>
+            <select id="priority-order">
+                <option value="high_to_low">High to Low</option>
+                <option value="low_to_high">Low to High</option>
+            </select>
+            <button id="select_order" type="button">Select</button>
+        </section>
+        
+        <section class="filter">
+            <label>Filter by priority:</label>
+            <select id="priority-filter">
+                <option value="high"> High </option>
+                <option value="medium">Medium </option>
+                <option value="low">Low </option>
+            </select>
+            <button id="select_filter" type="button">Select</button>
+        </section>
+
+        <section class="before_date">
+            <label>Find tickets before due date: </label>
+            <input id="before_due_date" type="date">
+            <button id="before_due_date_btn">Find</button>
+        </section>
+
+        <section class="filter_by_assignee">
+            <label>Filter by assignee id:</label>
+            <input id="filter_assignee_input" type="number">
+            <button id="filter_assignee_btn">Find</button>
+        </section>
+
+        <section class="todo">
+            <h2>Todo</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Issue</th>
+                        <th>Priority</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <!-- Example issue rows -->
+                    <tr>
+                        <td>1</td>
+                        <td><a class="info" href='#'>Create login page </a></td>
+                        <td class="low">Low</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td> <a class="info" href='#'>Add search functionality </a> </td>
+                        <td class="medium">Medium</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="in_progress">
+            <h2>In Progress</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Issue</th>
+                        <th>Priority</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <!-- Example issue rows -->
+                    <tr>
+                        <td>3</td>
+                        <td> <a class="info" href='#'>Fix formatting issues</a></td>
+                        <td class="high">High</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><a class="info" href='#'>Fix button issues</a></td>
+                        <td class="medium">Medium</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="code_review">
+            <h2>Code Review</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Issue</th>
+                        <th>Priority</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <!-- Example issue rows -->
+                    <tr>
+                        <td>5</td>
+                        <td><a class="info" href='#'>Refactor database queries</a></td>
+                        <td class="low">Low</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><a class="info" href='#'>Refactor layout</a></td>
+                        <td class="medium">Medium</td>
+                        <td><button class="btn update">update</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+        <section class="done">
+            <h2>Done</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Issue</th>
+                        <th>Priority</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    <!-- Example issue rows -->
+                    <tr>
+                        <td>7</td>
+                        <td><a class="info" href='#'>Implement user authentication</a></td>
+                        <td class="medium">Medium</td>
+                        <td><button class="btn update">update</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><a class="info" href='#'>Optimize page load times</a></td>
+                        <td class="low">Low</td>
+                        <td><button class="btn update">update</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+    <footer>
+        <button id="new-button">New Task</button>
+    </footer>
+
+    <form class="update_ticket_info" style="display:none;">
+        <div>
+            <label>Update ticket: </label>
+            <label id="take_id"></label>
+
+        </div>
+        <div>
+            <label for="set_title">Change title: </label>
+            <input id="set_title" type="text" name="set_title">
+        </div>
+        <div>
+            <label for="set_priority">Change priority: </label>
+            <select id="set_priority">
+                <option value="nothing"></option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+        <div>
+            <label for="set_description">Change description: </label>
+            <input id="set_description" type="text" name="set_description">
+        </div>
+        <div>
+            <label for="set_due_date">Change due date: </label>
+            <input id="set_due_date" type="date" name="set_due_date">
+        </div>
+        <div>
+            <label for="set_status">Change status: </label>
+            <select id="set_status">
+                <option value="nothing"></option>
+                <option value="to_do">To do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="code_review">Code Review</option>
+                <option value="done">Done</option>
+            </select>
+        </div>
+        <div>
+            <label for="set_assignee_id">Change assignee id: </label>
+            <input id="set_assignee_id" type="number" name="set_assignee_id">
+        </div>
+        <div>
+            <input id="update_task" type="submit" name="Update" value="Update"> 
+            <input id="delete_btn"  type="submit" name="Delete" value="Delete">
+        </div>
+    </form>
+
+    <form class="create_ticket" style="display:none;">
+        <div>
+          <label for="create_title">Create title:</label>
+          <input id="create_title" type="text" name="create_title">
+        </div>
+        <div>
+          <label for="create_priority">Create priority:</label>
+          <select id="create_priority">
+            <option value="nothing"></option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div>
+          <label for="create_description">Create description:</label>
+          <input id="create_description" type="text" name="create_description">
+        </div>
+        <div>
+          <label for="create_due_date">Create due date:</label>
+          <input id="create_due_date" type="date" name="create_due_date">
+        </div>
+        <div>
+          <label for="create_status">Create status:</label>
+          <select id="create_status">
+            <option value="nothing"></option>
+            <option value="to_do">To do</option>
+            <option value="in_progress">In Progress</option>
+            <option value="code_review">Code Review</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div>
+          <label for="create_assignee_id">Create assignee id:</label>
+          <input id="create_assignee_id" type="number" name="create_assignee_id">
+        </div>
+        <div>
+          <input id="create_new_task" type="submit" name="Create" value="Create">
+        </div>
+    </form>
+    <section class="info_task" style="display:none;">
+        <p id="p_id"></p>
+        <p id="p_title"></p>
+        <p id="p_priority"></p>
+        <p id="p_description"></p>
+        <p id="p_due_date"></p>
+        <p id="p_status"></p>
+        <p id="p_project_id"></p>
+        <p id="p_assignee_id"></p>
+        <p id="p_hide_btn">
+          <button id="hide_info_btn">Hide</button>
+        </p>
+      </section>      
+    <label id="message"></label>
+</body>
+
+</html>
