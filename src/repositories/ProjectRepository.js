@@ -1,5 +1,5 @@
 const db = require('../../database.js');
-const ProjectDto = require("../models/response/ProjectDto");
+const ProjectDto = require("../dtos/ProjectDto");
 
 class ProjectRepository {
     async createProject(project) {
@@ -27,16 +27,18 @@ class ProjectRepository {
 
     async findAllProjects() {
         const query = `
-            SELECT *
-            FROM projects
-        `;
+    SELECT *
+    FROM projects
+  `;
         const { rows } = await db.pool.query(query);
         const projects = [];
         rows.forEach(row => {
-            projects.push(new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id));
+            const project = new ProjectDto(row.id, row.project_key, row.name, row.description, row.creation_date, row.lead_user_id);
+            projects.push(project);
         });
         return projects;
     }
+
 
     async updateProjectById(id, project) {
         const query = `

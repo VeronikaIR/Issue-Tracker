@@ -1,5 +1,5 @@
 const db = require('../../database');
-const UserDto = require("../models/response/UserDto");
+const UserDto = require("../dtos/UserDto");
 
 class UserRepository {
     async createUser(user) {

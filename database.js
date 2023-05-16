@@ -31,8 +31,6 @@ async function loadMigrations() {
         console.log(`Executing migration file: ${migrationFile}`);
         await pool.query(migrationFileContents);
     }
-
-    console.log('All migrations executed successfully');
 }
 
 module.exports = { loadMigrations, pool};
