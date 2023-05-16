@@ -1,4 +1,4 @@
-const db = require('../../database');
+const db = require('../database');
 const UserDto = require("../dtos/UserDto");
 
 class UserRepository {
