@@ -14,7 +14,7 @@ const pool = new Pool({
 async function loadMigrations() {
 
     // get all migration files from the migrations directory
-    const migrationDir = path.join(__dirname, 'src/migrations');
+    const migrationDir = path.join(__dirname, './migrations');
     const migrationFiles = fs.readdirSync(migrationDir);
 
     // sort the migration files by their timestamp prefix
@@ -31,8 +31,6 @@ async function loadMigrations() {
         console.log(`Executing migration file: ${migrationFile}`);
         await pool.query(migrationFileContents);
     }
-
-    console.log('All migrations executed successfully');
 }
 
 module.exports = { loadMigrations, pool};

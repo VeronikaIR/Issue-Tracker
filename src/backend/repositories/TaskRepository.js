@@ -1,5 +1,5 @@
-const db = require('../../database.js');
-const TaskDto = require("../models/response/TaskDto");
+const db = require('../database.js');
+const TaskDto = require("../dtos/TaskDto");
 class TaskRepository {
 
     async createTask(task) {
