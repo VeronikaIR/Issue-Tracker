@@ -1,18 +1,16 @@
-// const express = require('express');
-// const { read, write } = require('../utils/file-utils');
-
 import { Router, Request, Response } from 'express';
 import { read, write } from '../utils/file-utils';
 import { ITicket, ITicketData } from '../interfaces/tickets';
 import { TicketController } from '../controllers/tickets-controller';
-import { title } from 'process';
 
 const ticketsRouter: Router = Router();
+
+//TODO: remove this after addind the db
 const ticketsJSON: string = 'resources/tickets.json';
 
 let ticketsController: TicketController;
 
-const getTicketsController = async (req: Request, res: Response, next: () => void) => {
+const getTicketController = async (req: Request, res: Response, next: () => void) => {
     try {
         ticketsController = new TicketController();
         console.log('Controller initialization...')
@@ -25,7 +23,7 @@ const getTicketsController = async (req: Request, res: Response, next: () => voi
     }
 };
 
-ticketsRouter.use(getTicketsController);
+ticketsRouter.use(getTicketController);
 
 ticketsRouter.get('/', async (request: Request, response: Response) => {
     try {
@@ -33,29 +31,12 @@ ticketsRouter.get('/', async (request: Request, response: Response) => {
         response.status(200).json(tickets);
     } catch (error) {
         console.error(error);
-
         response.status(500).json('Internal server error');
     }
 });
 
 ticketsRouter.get('/:task_key', async (request: Request, response: Response) => {
     const { task_key } =  request.params;
-
-    // read(ticketsJSON)
-    //     .then(ticketsData => JSON.parse(ticketsData))
-    //     .then((parsedData: IticketsData) => {
-    //         const ticket = parsedData.tickets.filter(ticket => ticket.fn === Number(fn))
-
-    //         if (ticket.length > 0) {
-    //             response.status(200).json(ticket);
-    //         } else {
-    //             response.status(404).json({ message: "ticket not found" });
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //         response.status(500).json({ error:  'Interal server error' });
-    //     });
 
     try {
         const ticket = await ticketsController.getTicketByTaskKey(Number(task_key));
@@ -73,21 +54,6 @@ ticketsRouter.get('/:task_key', async (request: Request, response: Response) => 
 
 ticketsRouter.post('/', async (request: Request, response: Response) => {
     const ticket: ITicket = request.body;
-
-    // read(ticketsJSON)
-    //     .then(ticketsData => JSON.parse(ticketsData))
-    //     .then((parsedData: IticketsData) => {
-    //         parsedData.tickets.push(ticket);
-
-    //         return JSON.stringify(parsedData);
-    //     })
-    //     .then(updatedtickets => write(ticketsJSON, updatedtickets))
-    //     .then(() => response.status(201).json({ message: "ticket added successfully" }))
-    //     .catch(error => {
-    //         console.error(error);
-
-    //         response.status(500).json({ error: "Internal server error"});
-    //     });
 
     try {
         await ticketsController.addticket(ticket);
