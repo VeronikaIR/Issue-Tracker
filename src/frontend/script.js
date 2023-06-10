@@ -61,7 +61,7 @@
     const input_create_btn = form_create.querySelector('#create_new_task');
     input_create_btn.addEventListener('click', createNewTask);
 
-
+    getTicketsData();
 
 }())
 

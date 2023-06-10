@@ -1,8 +1,10 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import tickets from './routes/tickets';
 import projects from './routes/projects';
 
 const app = express();
+app.use(cors());
 
 app.use(express.json({ type: 'application/json' }));
 
