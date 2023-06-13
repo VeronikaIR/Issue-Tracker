@@ -55,8 +55,8 @@ ticketsRouter.post('/', async (request: Request, response: Response) => {
 
     try {
         console.log(ticket);
-        await ticketsController.addTicket(ticket);
-        response.status(201).json({message: "Ticket added successfully"});
+        const createdTicker = await ticketsController.addTicket(ticket);
+        response.status(201).json(createdTicker);
     } catch (error) {
         console.error(error);
         response.status(500).json({error: "Internal server error"});

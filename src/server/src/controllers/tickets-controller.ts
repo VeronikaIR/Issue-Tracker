@@ -1,4 +1,4 @@
-import {ITicket, ITicketData} from "../interfaces/tickets";
+import {ITicket} from "../interfaces/tickets";
 import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 
 const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
@@ -7,14 +7,14 @@ import {TaskDto} from "../database/dtos/TaskDto";
 const TaskRepository = require('../database/repositories/TaskRepository');
 
 export class TicketController {
-    private ticketsCollection: ITicketData;
+    private ticketsCollection: ITicket[];
 
     constructor() {
     }
 
     public async init() {
         try {
-            const tickets = await TaskRepository.findAllTasks();
+            const tickets: TaskDto[] = await TaskRepository.findAllTasks();
             console.log(tickets);
             this.ticketsCollection = tickets.map((ticket) => {
                 console.log("Before: ");
@@ -30,7 +30,7 @@ export class TicketController {
     };
 
 
-    public async getTicketsData(): Promise<ITicketData> {
+    public async getTicketsData(): Promise<ITicket[]> {
         return this.ticketsCollection;
     };
 
@@ -43,13 +43,15 @@ export class TicketController {
     };
 
     public async addTicket(ticket: ITicket): Promise<void> {
-        const task_key: string = "TASK-3";
+        console.log(ticket);
 
-        const newTicket = new CreateTaskDto(task_key, ticket.title, ticket.description,
-            ticket.priority, ticket.due_date, ticket.status, 1, 1);
+        const newTicket = new CreateTaskDto(ticket.task_key, ticket.title, ticket.description,
+            ticket.priority, ticket.due_date, ticket.status, ticket.project_id, ticket.assignee_id);
 
+        console.log(newTicket);
         const createTicket = await TaskRepository.createTask(newTicket);
         console.log("Successfully created ticket" + createTicket);
+        return createTicket;
     };
 
     public async updateTicket(task_key: Number, input_ticket: ITicket): Promise<ITicket | undefined> {

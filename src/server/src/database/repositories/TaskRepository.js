@@ -1,5 +1,6 @@
 const db = require('../database.js');
 const TaskDto = require("../dtos/TaskDto");
+const ProjectDto = require("../dtos/ProjectDto");
 class TaskRepository {
 
     async findAllTasks() {

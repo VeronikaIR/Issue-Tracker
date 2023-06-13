@@ -8,7 +8,7 @@ const CreateTaskDto = require("../database/dtos/create/CreateTaskDto");
 export function parseTaskDtoToITicket(ticket): ITicket {
     return {
         id: ticket.id,
-        task_key: ticket.task_key,
+        task_key: ticket.taskKey,
         title: ticket.title,
         description: ticket.description,
         priority: ticket.priority,

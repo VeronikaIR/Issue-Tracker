@@ -9,7 +9,3 @@ export interface ITicket {
     project_id: number,
     assignee_id: number
 };
-
-export interface ITicketData {
-    tickets: ITicket[];
-};

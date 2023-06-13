@@ -1,5 +1,5 @@
 const showTickets = ticketData => {
-    ticketData.tickets.forEach(ticket => {
+    ticketData.forEach(ticket => {
         appendTicket(ticket);
     });
 };
