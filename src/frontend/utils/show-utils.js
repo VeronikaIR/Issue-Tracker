@@ -8,8 +8,9 @@ async function showInfoForTask(event) {
     event.preventDefault();
     const label = document.querySelector('#message');
     label.innerHTML = '';
-    const id = Number(event.target.parentElement.previousElementSibling.innerHTML);
 
+    const id = event.target.parentElement.previousElementSibling.innerHTML;
+    console.log(id);
     let task;
     try {
         task = await getTicketDataByTicketNumber(id);

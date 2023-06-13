@@ -10,7 +10,7 @@ function makeUpdateForm(event) {
 function updateInformation(event) {
     event.preventDefault();
     const form = document.querySelector(".update_ticket_info");
-    const ticket_id = Number(form.querySelector('#take_id').innerHTML);
+    const ticket_id = form.querySelector('#take_id').innerHTML;
     //const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
     const ticket = {};
     const current_status = form.querySelector('#take_status').innerHTML;
@@ -132,9 +132,9 @@ function updateInformation(event) {
 function DeleteTask(event) {
     event.preventDefault();
     const form = document.querySelector(".update_ticket_info");
-    const ticket_id = Number(form.querySelector('#take_id').innerHTML);
-    const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
-    const current_status = ticket.status;
+    const ticket_id = form.querySelector('#take_id').innerHTML;
+  //  const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
+    const current_status = form.querySelector('#take_status').innerHTML;
     let parent_section;
     let parent_table;
 
@@ -159,14 +159,15 @@ function DeleteTask(event) {
     let ticketHTML;
     for (let i = 0; i < rows.length; i++) {
         const id = rows[i].firstElementChild.innerHTML;
-        if (Number(id) === ticket_id) {
+        if (id === ticket_id) {
             ticketHTML = rows[i];
         }
     }
 
     parent_table.removeChild(ticketHTML);
 
-    file.tasks = file.tasks.filter(task => task.id !== ticket_id);
+    deleteTicketByTaskKey(ticket_id);
+   // file.tasks = file.tasks.filter(task => task.id !== ticket_id);
 
     form.style.display = 'none';
 

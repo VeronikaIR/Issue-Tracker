@@ -17,6 +17,21 @@ class TaskRepository {
         return tasks;
     }
 
+    async  getAllTasksByProjectId(projectId) {
+        const query = `
+            SELECT *
+            FROM tasks
+            WHERE project_id = $1
+        `;
+        const values = [projectId];
+        const { rows } = await db.pool.query(query, values);
+
+        const tasks = rows.map(row => {
+            return new TaskDto(row.id, row.task_key, row.title, row.description, row.priority, row.due_date, row.status, row.project_id, row.assignee_id);
+        });
+
+        return tasks;
+    }
 
     async createTask(task) {
         const query = `

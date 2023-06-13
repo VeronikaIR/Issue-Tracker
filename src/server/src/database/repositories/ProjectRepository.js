@@ -14,6 +14,8 @@ class ProjectRepository {
         return new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
     }
 
+
+
     async getProjectById(id) {
         const query = `
             SELECT *

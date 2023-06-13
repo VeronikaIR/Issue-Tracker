@@ -2,9 +2,9 @@ import {ITicket} from "../interfaces/tickets";
 import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 
 const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
-import {TaskDto} from "../database/dtos/TaskDto";
+import {TaskDto} from "../database/dtos/TaskDto.js";
 
-const TaskRepository = require('../database/repositories/TaskRepository');
+const TaskRepository = require('../database/repositories/TaskRepository.js');
 
 export class TicketController {
     private ticketsCollection: ITicket[];
