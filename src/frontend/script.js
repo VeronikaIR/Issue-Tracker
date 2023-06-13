@@ -1,5 +1,5 @@
 (function () {
-
+    getTicketsData();
     //filters and order
     const btnSelectOrder = document.getElementById("select_order");
 
@@ -32,7 +32,9 @@
     //show full info for task
     const infos = document.querySelectorAll(".info");
     infos.forEach(info => {
-        info.addEventListener('click', showInfoForTask);
+        info.addEventListener('click', async function(){
+            await showInfoForTask();
+        });
     });
 
     const hide_btn = document.querySelector('#hide_info_btn');
@@ -59,9 +61,9 @@
 
     const form_create = document.querySelector('.create_ticket');
     const input_create_btn = form_create.querySelector('#create_new_task');
-    input_create_btn.addEventListener('click', createNewTask);
+    input_create_btn.addEventListener('click', createNewTask); //async???
 
-    getTicketsData();
+   
 
 }())
 

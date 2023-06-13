@@ -4,15 +4,16 @@ function makeUpdateForm(event) {
     const form = document.querySelector(".update_ticket_info");
     form.style.display = '';
     form.querySelector('#take_id').innerHTML = event.target.parentElement.parentElement.children[0].innerHTML;
-
+    form.querySelector('#take_status').innerHTML = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].innerHTML;
 }
 
 function updateInformation(event) {
     event.preventDefault();
     const form = document.querySelector(".update_ticket_info");
     const ticket_id = Number(form.querySelector('#take_id').innerHTML);
-    const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
-    const current_status = ticket.status;
+    //const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
+    const ticket = {};
+    const current_status = form.querySelector('#take_status').innerHTML;
     let parent_section;
     let parent_table;
 
@@ -112,6 +113,8 @@ function updateInformation(event) {
         const new_assignee_id = Number(form.querySelector('#set_assignee_id').value);
         ticket.assignee_id = new_assignee_id;
     }
+
+    sendUpdatedTicketDataByTaskKey(ticket, ticket_id);
 
     form.style.display = 'none';
     form.querySelector('#set_title').value = '';

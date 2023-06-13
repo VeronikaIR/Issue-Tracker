@@ -1,16 +1,28 @@
 
-function showInfoForTask(event) {
+function showTicket(data) {
+    return data;
+}
+
+
+async function showInfoForTask(event) {
     event.preventDefault();
     const label = document.querySelector('#message');
     label.innerHTML = '';
     const id = Number(event.target.parentElement.previousElementSibling.innerHTML);
 
-    const task = file.tasks.filter(task => task.id === id)[0];
+    let task;
+    try {
+        task = await getTicketDataByTicketNumber(id);
+    }
+    catch (error) {
+        console.error(error);
+    }
+
 
     const section = document.querySelector('.info_task');
 
     const p_id = section.querySelector('#p_id');
-    p_id.innerHTML = 'Task #ID: ' + task.id;
+    p_id.innerHTML = 'Task #ID: ' + task.task_key;
 
     const p_title = section.querySelector('#p_title');
     p_title.innerHTML = 'Title: ' + task.title;
