@@ -3,7 +3,6 @@ import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 
 const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
 import {TaskDto} from "../database/dtos/TaskDto";
-//import ticketsRouter from "../routes/tickets";
 
 const TaskRepository = require('../database/repositories/TaskRepository');
 

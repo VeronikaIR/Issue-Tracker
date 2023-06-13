@@ -1,6 +1,6 @@
 class CreateProjectDto {
-    constructor(projectKey ,name, description, creationDate,leadUserId) {
-        this.projectKey = projectKey;
+    constructor(project_key ,name, description, creationDate,leadUserId) {
+        this.project_key = project_key;
         this.name = name;
         this.description = description;
         this.creationDate =  creationDate;

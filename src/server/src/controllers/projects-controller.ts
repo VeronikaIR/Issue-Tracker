@@ -1,57 +1,41 @@
 import { IProject, IProjectData} from "../interfaces/projects";
-const projectsJSON: string = 'resources/projects.json';
-const projectsCollection = 'projects';
+import {parseProjectDtoToIProject} from "../utils/projects-utils";
 
-export class ProjectsController {
-    private projectsData: IProjectData;
-    private projectsCollection;
+const ProjectRepository = require('../database/repositories/ProjectRepository');
+
+export class ProjectController {
+    private projectsCollection: IProjectData;
 
     constructor() {}
 
     public async init() {
-        // try {
-        //     const db = await new DataBase().connectDB();
-        //     this.projectsCollection = await db.collection('projects');
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        try {
+            const projects = await ProjectRepository.findAllProjects();
+            console.log(projects);
+            this.projectsCollection = projects.map((project) => {
+                console.log("Before: ");
+                console.log(project);
+                const parsedProject = parseProjectDtoToIProject(project);
+                console.log("Parsed:");
+                console.log(parsedProject);
+                return parsedProject;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-        // const projectsData = await readFile(projectsJSON);
-        //this.projectsData = JSON.parse(projectsData);
-    }
 
     public async getProjectsData(): Promise<IProjectData> {
-        //return this.projectsCollection.find({});
-        return this.projectsData;
+       return this.projectsCollection;
     }
 
-    public async getProjectByProjectKey(project_key: number): Promise<IProject | undefined> {
-        //const project = await this.projectsCollection.findOne({ fn });
-        const project = this.projectsData.projects.filter(project => project.project_key === project_key)
+    public async getProjectByProjectKey(project_id: number): Promise<IProject | undefined> {
+        const foundProject = await ProjectRepository.getProjectById(project_id);
 
-        return project[0];
+        console.log(foundProject);
+
+        return parseProjectDtoToIProject(foundProject);
     }
 
-    public async addProject(project: IProject): Promise<void> {
-        project.project_key = Number(project.project_key);
-        project.name = project.name;
-
-        //this.projectsCollection.insertOne(project);
-
-        this.projectsData.projects.push(project);
-
-        //await this.saveprojectsData();
-    }
-
-    public async deleteprojectByProjectKey(project_num: number): Promise<void> {
-        // this.projectsCollection.deleteOne({ project_key: project_num });
-
-        const updatedProjects = this.projectsData.projects.filter(project => project.project_key !== project_num);
-        this.projectsData.projects = updatedProjects;
-        //await write(projectsJSON, JSON.stringify(this.projectsData));
-    }
-
-    // private async saveprojectsData(): Promise<void> {
-    //     await write(projectsJSON, JSON.stringify(this.projectsData));
-    // }
 }

@@ -1,10 +1,10 @@
 export interface IProject {
-    project_key: Number,
+    id: number,
+    project_key: string,
     name: string,
     description: string,
     creation_date: Date,
-    status: string,
-    lead_user_id: Number
+    lead_user_id: number
 };
 
 export interface IProjectData {
