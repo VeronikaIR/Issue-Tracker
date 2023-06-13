@@ -2,13 +2,29 @@ const db = require('../database.js');
 const TaskDto = require("../dtos/TaskDto");
 class TaskRepository {
 
+    async findAllTasks() {
+        const query = `
+            SELECT *
+            FROM tasks
+        `;
+        const { rows } = await db.pool.query(query);
+
+        const tasks = [];
+        rows.forEach(row => {
+            const task = new TaskDto(row.id, row.task_key, row.title, row.description, row.priority, row.due_date,
+                row.status, row.project_id, row.assignee_id);
+            tasks.push(task);
+        });
+        return tasks;
+    }
+
     async createTask(task) {
         const query = `
             INSERT INTO tasks (task_key, title, description, priority, due_date, status, project_id, assignee_id)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *
         `;
-        const values = [task.taskKey, task.title, task.description,task.priority, task.dueDate, task.status, task.projectId, task.assigneeId];
+        const values = [task.task_key, task.title, task.description,task.priority, task.due_date, task.status, task.project_id, task.assignee_id];
         const { rows } = await db.pool.query(query, values);
 
         return new TaskDto(rows[0].id, rows[0].task_key, rows[0].title, rows[0].description, rows[0].priority, rows[0].due_date, rows[0].status, rows[0].project_id, rows[0].assignee_id);
@@ -33,7 +49,7 @@ class TaskRepository {
           WHERE id = $9
           RETURNING *
     `;
-        const values = [task.taskKey, task.title, task.description, task.priority, task.dueDate, task.status, task.projectId, task.assigneeId, id];
+        const values = [task.task_key, task.title, task.description, task.priority, task.due_date, task.status, task.project_id, task.assignee_id, id];
         const { rows } = await db.pool.query(query, values);
         return new TaskDto(rows[0].id, rows[0].task_key, rows[0].title, rows[0].description, rows[0].priority, rows[0].due_date, rows[0].status, rows[0].project_id, rows[0].assignee_id);
     }
