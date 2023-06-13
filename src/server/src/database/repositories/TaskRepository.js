@@ -8,15 +8,14 @@ class TaskRepository {
             FROM tasks
         `;
         const { rows } = await db.pool.query(query);
-
         const tasks = [];
         rows.forEach(row => {
-            const task = new TaskDto(row.id, row.task_key, row.title, row.description, row.priority, row.due_date,
-                row.status, row.project_id, row.assignee_id);
+            const task = new  TaskDto(row.id, row.task_key, row.title, row.description, row.priority, row.due_date, row.status, row.project_id, row.assignee_id);
             tasks.push(task);
         });
         return tasks;
     }
+
 
     async createTask(task) {
         const query = `
@@ -24,7 +23,7 @@ class TaskRepository {
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING *
         `;
-        const values = [task.task_key, task.title, task.description,task.priority, task.due_date, task.status, task.project_id, task.assignee_id];
+        const values = [task.taskKey, task.title, task.description,task.priority, task.dueDate, task.status, task.projectId, task.assigneeId];
         const { rows } = await db.pool.query(query, values);
 
         return new TaskDto(rows[0].id, rows[0].task_key, rows[0].title, rows[0].description, rows[0].priority, rows[0].due_date, rows[0].status, rows[0].project_id, rows[0].assignee_id);
@@ -49,7 +48,7 @@ class TaskRepository {
           WHERE id = $9
           RETURNING *
     `;
-        const values = [task.task_key, task.title, task.description, task.priority, task.due_date, task.status, task.project_id, task.assignee_id, id];
+        const values = [task.taskKey, task.title, task.description, task.priority, task.dueDate, task.status, task.projectId, task.assigneeId, id];
         const { rows } = await db.pool.query(query, values);
         return new TaskDto(rows[0].id, rows[0].task_key, rows[0].title, rows[0].description, rows[0].priority, rows[0].due_date, rows[0].status, rows[0].project_id, rows[0].assignee_id);
     }
@@ -59,7 +58,7 @@ class TaskRepository {
             DELETE
             FROM tasks
             WHERE id = $1
-            RETURNING *
+                RETURNING *
         `;
         const values = [id];
         const { rows } = await db.pool.query(query, values);

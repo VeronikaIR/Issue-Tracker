@@ -10,7 +10,7 @@ const getTicketsData = () => {
         mode: 'cors',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         }
     };
 
