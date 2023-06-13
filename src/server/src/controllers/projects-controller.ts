@@ -1,8 +1,4 @@
 import { IProject, IProjectData} from "../interfaces/projects";
-import { readFile, write } from "../utils/file-utils";
-// import { DataBase } from '../db/index';
-// import { MongoClient } from "mongodb";
-
 const projectsJSON: string = 'resources/projects.json';
 const projectsCollection = 'projects';
 
@@ -20,8 +16,8 @@ export class ProjectsController {
         //     console.error(error);
         // }
 
-        const projectsData = await readFile(projectsJSON);
-        this.projectsData = JSON.parse(projectsData);
+        // const projectsData = await readFile(projectsJSON);
+        //this.projectsData = JSON.parse(projectsData);
     }
 
     public async getProjectsData(): Promise<IProjectData> {
@@ -36,26 +32,26 @@ export class ProjectsController {
         return project[0];
     }
 
-    // public async addProject(project: IProject): Promise<void> {
-    //     project.project_key = Number(project.project_key);
-    //     project.name = project.name;
-        
-    //     //this.projectsCollection.insertOne(project);
+    public async addProject(project: IProject): Promise<void> {
+        project.project_key = Number(project.project_key);
+        project.name = project.name;
 
-    //     this.projectsData.projects.push(project);
+        //this.projectsCollection.insertOne(project);
 
-    //     await this.saveprojectsData();
-    // }
+        this.projectsData.projects.push(project);
 
-    // public async deleteprojectByProjectKey(project_num: number): Promise<void> {
-    //    // this.projectsCollection.deleteOne({ project_key: project_num });
+        //await this.saveprojectsData();
+    }
 
-    //     const updatedProjects = this.projectsData.projects.filter(project => project.project_key !== project_num);
-    //     this.projectsData.projects = updatedProjects;
+    public async deleteprojectByProjectKey(project_num: number): Promise<void> {
+        // this.projectsCollection.deleteOne({ project_key: project_num });
+
+        const updatedProjects = this.projectsData.projects.filter(project => project.project_key !== project_num);
+        this.projectsData.projects = updatedProjects;
+        //await write(projectsJSON, JSON.stringify(this.projectsData));
+    }
+
+    // private async saveprojectsData(): Promise<void> {
     //     await write(projectsJSON, JSON.stringify(this.projectsData));
     // }
-
-    private async saveprojectsData(): Promise<void> {
-        await write(projectsJSON, JSON.stringify(this.projectsData));
-    }
 }

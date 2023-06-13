@@ -1,62 +1,85 @@
-import { ITicket, ITicketData} from "../interfaces/tickets";
-import { readFile, write } from "../utils/file-utils";
-// import { DataBase } from '../db/index';
-// import { MongoClient } from "mongodb";
+import {ITicket, ITicketData} from "../interfaces/tickets";
+import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 
-const ticketsJSON: string = 'resources/tickets.json';
-const ticketsCollection = 'tickets';
+const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
+import {TaskDto} from "../database/dtos/TaskDto";
+//import ticketsRouter from "../routes/tickets";
+
+const TaskRepository = require('../database/repositories/TaskRepository');
 
 export class TicketController {
-    private ticketsData: ITicketData;
-    private ticketsCollection;
+    private ticketsCollection: ITicketData;
 
-    constructor() {}
+    constructor() {
+    }
 
     public async init() {
-        // try {
-        //     const db = await new DataBase().connectDB();
-        //     this.ticketsCollection = await db.collection('tickets');
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        try {
+            const tickets = await TaskRepository.findAllTasks();
+            console.log(tickets);
+            this.ticketsCollection = tickets.map((ticket) => {
+                console.log("Before: ");
+                console.log(ticket);
+                const parsedObej = parseTaskDtoToITicket(ticket);
+                console.log("Parsed:");
+                console.log(parsedObej);
+                return parsedObej;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-        const ticketsData = await readFile(ticketsJSON);
-        
-        this.ticketsData = JSON.parse(ticketsData);
-    }
 
     public async getTicketsData(): Promise<ITicketData> {
-        //return this.ticketsCollection.find({});
-        return this.ticketsData;
-    }
+        return this.ticketsCollection;
+    };
 
-    public async getTicketByTaskKey(task_key: number): Promise<ITicket | undefined> {
-        //const ticket = await this.ticketsCollection.findOne({ fn });
-        const ticket = this.ticketsData.tickets.filter(ticket => ticket.task_key === task_key)
+    public async getTicketByTaskKey(task_key: string): Promise<ITicket | undefined> {
+        const foundTicket = await TaskRepository.getTaskById(task_key);
 
-        return ticket[0];
-    }
+        console.log(foundTicket);
 
-    public async addticket(ticket: ITicket): Promise<void> {
-        ticket.task_key = Number(ticket.task_key);
-        ticket.title = ticket.title;
-        
-        //this.ticketsCollection.insertOne(ticket);
+        return parseTaskDtoToITicket(foundTicket);
+    };
 
-        this.ticketsData.tickets.push(ticket);
+    public async addTicket(ticket: ITicket): Promise<void> {
+        const task_key: string = "TASK-3";
 
-        await this.saveTicketsData();
-    }
+        const newTicket = new CreateTaskDto(task_key, ticket.title, ticket.description,
+            ticket.priority, ticket.due_date, ticket.status, 1, 1);
 
-    public async deleteTicketByTaskKey(ticket_num: number): Promise<void> {
-       // this.ticketsCollection.deleteOne({ task_key: ticket_num });
+        const createTicket = await TaskRepository.createTask(newTicket);
+        console.log("Successfully created ticket" + createTicket);
+    };
 
-        const updatedtickets = this.ticketsData.tickets.filter(ticket => ticket.task_key !== ticket_num);
-        this.ticketsData.tickets = updatedtickets;
-        await write(ticketsJSON, JSON.stringify(this.ticketsData));
-    }
+    public async updateTicket(task_key: Number, input_ticket: ITicket): Promise<ITicket | undefined> {
 
-    private async saveTicketsData(): Promise<void> {
-        await write(ticketsJSON, JSON.stringify(this.ticketsData));
-    }
+        const foundTicket = await TaskRepository.getTaskById(task_key);
+
+        if (!foundTicket) {
+            throw new Error("There is no task with this id found!");
+        }
+
+        console.log("Found ticket: ");
+        console.log(foundTicket);
+        console.log("Input ticket: ");
+        console.log(input_ticket);
+
+        const newTicket = parsedInputTicket(foundTicket, input_ticket);
+
+        console.log("New ticket: ");
+        console.log(newTicket);
+        const updatedTicket: TaskDto = await TaskRepository.updateTaskById(task_key, newTicket);
+
+        console.log("Successfully updated ticket" + updatedTicket);
+
+        return parseTaskDtoToITicket(updatedTicket);
+
+    };
+
+    public async deleteTicketByTaskKey(ticket_num: string): Promise<void> {
+        const deleteTicket: TaskDto = await TaskRepository.deleteTaskById(ticket_num);
+        console.log("Delete ticket is: \n" + deleteTicket);
+    };
 }

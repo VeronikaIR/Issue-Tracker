@@ -1,10 +1,13 @@
 export interface ITicket {
-    task_key: Number,
+    id: Number,
+    task_key: string,
     title: string,
     description: string,
     priority: string;
     due_date: Date,
-    status: string
+    status: string,
+    project_id: Number,
+    assignee_id: Number
 };
 
 export interface ITicketData {
