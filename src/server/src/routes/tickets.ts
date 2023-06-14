@@ -49,6 +49,23 @@ ticketsRouter.get('/:task_key', async (request: Request, response: Response) => 
     }
 });
 
+ticketsRouter.get('/tickets-by-project/:project_key', async (request: Request, response: Response) => {
+    const {project_key} = request.params;
+
+    try {
+        const tickets = await ticketsController.getTicketsByProjectId(project_key);
+
+        if (tickets.length > 0) {
+            response.status(200).json(tickets);
+        } else {
+            response.status(404).json({message: "Tickets not found"});
+        }
+    } catch (error) {
+        console.error(error);
+        response.status(500).json('Internal server error');
+    }
+});
+
 
 ticketsRouter.post('/', async (request: Request, response: Response) => {
     const ticket: ITicket = request.body;
@@ -63,22 +80,22 @@ ticketsRouter.post('/', async (request: Request, response: Response) => {
     }
 });
 
-// ticketsRouter.patch('/:task_key', async (request: Request, response: Response) => {
-//     const {task_key} = request.params;
-//     const input_ticket_details: ITicket = request.body;
-//
-//     try {
-//
-//         console.log(input_ticket_details);
-//         await ticketsController.updateTicket(Number(task_key), input_ticket_details);
-//
-//         response.status(200).json({message: 'Ticket updated successfully'});
-//     } catch (error) {
-//         console.error(error);
-//
-//         response.status(500).json({error: 'Internal server error'});
-//     }
-// });
+ticketsRouter.patch('/:task_key', async (request: Request, response: Response) => {
+    const {task_key} = request.params;
+    const inputTicketDetails: ITicket = request.body;
+
+    try {
+
+        console.log(inputTicketDetails);
+        await ticketsController.updateTicket(Number(task_key), inputTicketDetails);
+
+        response.status(200).json({message: 'Ticket updated successfully'});
+    } catch (error) {
+        console.error(error);
+
+        response.status(500).json({error: 'Internal server error'});
+    }
+});
 
 ticketsRouter.delete('/:task_key', async (request: Request, response: Response) => {
     const {task_key} = request.params;

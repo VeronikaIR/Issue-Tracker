@@ -21,7 +21,7 @@ app.listen(3000, () => {console.log("The server is running on port 3000...")});
 
 //to load test data in the tables
 //
-const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
+/*const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
 const  CreateUserDto  = require('./database/dtos/create/CreateUserDto');
 const CreateProjectDto = require('./database/dtos/create/CreateProjectDto');
 const UserRepository  = require('./database/repositories/UserRepository');
@@ -175,4 +175,4 @@ async function runDemo() {
     console.log('-----END OF THE DEMO-----');
  }
 
-runDemo();
+runDemo();*/
