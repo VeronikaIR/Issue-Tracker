@@ -1,8 +1,6 @@
 import {ITicket} from "../interfaces/tickets";
-import {Timestamp} from "mongodb";
 
 const CreateTaskDto = require("../database/dtos/create/CreateTaskDto");
-
 
 export function parseTaskDtoToITicket(ticket): ITicket {
     return {
@@ -23,48 +21,40 @@ export function parsedInputTicket(ticket, inputTicket) {
     let title: string = ticket.title;
     let description: string = ticket.description;
     let priority: string = ticket.priority;
-    let dueDate: Timestamp = ticket.dueDate;
+    let dueDate = ticket.dueDate;
     let status: string = ticket.status;
     let projectId: number = ticket.projectId;
     let assigneeId: number = ticket.assigneeId;
 
-    if (inputTicket.taskKey
-        && ticket.taskKey == !inputTicket.taskKey) {
+    if (inputTicket.taskKey) {
         taskKey = inputTicket.taskKey;
     }
 
-    if (inputTicket.title
-        && ticket.title == !inputTicket.title) {
+    if (inputTicket.title) {
         title = inputTicket.title;
     }
 
-    if (inputTicket.description
-        && ticket.description == !inputTicket.description) {
+    if (inputTicket.description) {
         description = inputTicket.description;
     }
 
-    if (inputTicket.priority
-        && ticket.priority == !inputTicket.priority) {
+    if (inputTicket.priority) {
         priority = inputTicket.priority;
     }
 
-    if (inputTicket.dueDate
-        && ticket.dueDate == !inputTicket.dueDate) {
-        dueDate = new Timestamp(inputTicket.dueDate);
+    if (inputTicket.dueDate) {
+        dueDate = inputTicket.dueDate;
     }
 
-    if (inputTicket.status
-        && ticket.status == !inputTicket.status) {
+    if (inputTicket.status) {
         status = inputTicket.status;
     }
 
-    if (inputTicket.projectId
-        && ticket.projectId == !inputTicket.projectId) {
+    if (inputTicket.projectId) {
         projectId = inputTicket.projectId;
     }
 
-    if (inputTicket.assigneeId
-        && ticket.assigneeId == !inputTicket.assigneeId) {
+    if (inputTicket.assigneeId) {
         assigneeId = inputTicket.assigneeId;
     }
 
