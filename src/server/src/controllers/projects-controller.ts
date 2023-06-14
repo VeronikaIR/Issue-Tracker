@@ -1,16 +1,16 @@
-import { IProject, IProjectData} from "../interfaces/projects";
+import { IProject} from "../interfaces/projects";
 import {parseProjectDtoToIProject} from "../utils/projects-utils";
 
 const ProjectRepository = require('../database/repositories/ProjectRepository');
 
 export class ProjectController {
-    private projectsCollection: IProjectData;
+    private projectsCollection: IProject[];
 
     constructor() {}
 
     public async init() {
         try {
-            const projects = await ProjectRepository.findAllProjects();
+            const projects: IProject[] = await ProjectRepository.findAllProjects();
             console.log(projects);
             this.projectsCollection = projects.map((project) => {
                 console.log("Before: ");
@@ -26,7 +26,7 @@ export class ProjectController {
     };
 
 
-    public async getProjectsData(): Promise<IProjectData> {
+    public async getProjectsData(): Promise<IProject[]> {
        return this.projectsCollection;
     }
 
