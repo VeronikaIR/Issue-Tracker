@@ -23,17 +23,21 @@
     });
 
     const filter_assignee_btn = document.getElementById('filter_assignee_btn');
-    filter_assignee_btn.addEventListener('click', filterByAssignee);
+    filter_assignee_btn.addEventListener('click', async function(event){
+        await filterByAssignee(event);
+    });
 
     const before_due_date_btn = document.getElementById('before_due_date_btn');
-    before_due_date_btn.addEventListener('click', dueBeforeDate);
+    before_due_date_btn.addEventListener('click', async function(event){
+        await dueBeforeDate(event);
+    });
 
 
     //show full info for task
     const infos = document.querySelectorAll(".info");
     infos.forEach(info => {
-        info.addEventListener('click', async function(){
-            await showInfoForTask();
+        info.addEventListener('click', async function(event){
+            await showInfoForTask(event);
         });
     });
 
@@ -61,7 +65,10 @@
 
     const form_create = document.querySelector('.create_ticket');
     const input_create_btn = form_create.querySelector('#create_new_task');
-    input_create_btn.addEventListener('click', createNewTask); //async???
+    input_create_btn.addEventListener('click', async function(event)
+    {
+        await createNewTask(event);
+    });
 
    
 

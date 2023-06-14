@@ -11,7 +11,6 @@ function updateInformation(event) {
     event.preventDefault();
     const form = document.querySelector(".update_ticket_info");
     const ticket_id = form.querySelector('#take_id').innerHTML;
-    //const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
     const ticket = {};
     const current_status = form.querySelector('#take_status').innerHTML;
     let parent_section;
@@ -43,7 +42,7 @@ function updateInformation(event) {
     let ticketHTML;
     for (let i = 0; i < rows.length; i++) {
         const id = rows[i].firstElementChild.innerHTML;
-        if (Number(id) === ticket_id) {
+        if (id === ticket_id) {
             ticketHTML = rows[i];
         }
     }
@@ -61,12 +60,10 @@ function updateInformation(event) {
         ticketHTML.children[2].setAttribute('class', new_priority.toLowerCase());
     }
     if (form.querySelector('#set_description').value !== '') {
-        const new_description = form.querySelector('#set_description').value;
-        ticket.description = new_description;
+        ticket.description = form.querySelector('#set_description').value;
     }
     if (form.querySelector('#set_due_date').value !== '') {
-        const new_due_date = form.querySelector('#set_due_date').value;
-        ticket.due_date = new_due_date;
+        ticket.dueDate = form.querySelector('#set_due_date').value;
     }
 
     if (form.querySelector('#set_status').value !== 'nothing') {
@@ -110,13 +107,15 @@ function updateInformation(event) {
     }
 
     if (form.querySelector('#set_assignee_id').value !== '' && Number(form.querySelector('#set_assignee_id').value) >= 0) {
-        const new_assignee_id = Number(form.querySelector('#set_assignee_id').value);
-        ticket.assignee_id = new_assignee_id;
+        ticket.assigneeId = Number(form.querySelector('#set_assignee_id').value);
     }
 
-    sendUpdatedTicketDataByTaskKey(ticket, ticket_id);
+    const modifiedId = ticket_id.replace(/\D/g, '');
+    sendUpdatedTicketDataByTaskKey(ticket, modifiedId);
 
     form.style.display = 'none';
+    form.querySelector('#take_id').innerHTML ='';
+    form.querySelector('#take_status').innerHTML ='';
     form.querySelector('#set_title').value = '';
     form.querySelector('#set_priority').value = 'nothing';
     form.querySelector('#set_description').value = '';
@@ -166,11 +165,14 @@ function DeleteTask(event) {
 
     parent_table.removeChild(ticketHTML);
 
-    deleteTicketByTaskKey(ticket_id);
+    const modifiedId = ticket_id.replace(/\D/g, '');
+    deleteTicketByTaskKey(modifiedId);
    // file.tasks = file.tasks.filter(task => task.id !== ticket_id);
 
     form.style.display = 'none';
 
+    form.querySelector('#take_id').innerHTML ='';
+    form.querySelector('#take_status').innerHTML ='';
     form.querySelector('#set_title').value = '';
     form.querySelector('#set_priority').value = 'nothing';
     form.querySelector('#set_description').value = '';

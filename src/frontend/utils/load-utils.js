@@ -12,7 +12,8 @@ function appendTicket(ticket)
     const tr_ticket = document.createElement('tr');
 
     const td_id = document.createElement('td');
-    td_id.innerHTML = ticket.task_key;
+    td_id.innerHTML = 'TASK-'+ ticket.id;
+
 
     const td_title = document.createElement('td');
     const a_title = document.createElement('a');

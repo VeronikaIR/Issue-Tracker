@@ -1,7 +1,8 @@
 import {ITicket} from "../interfaces/tickets";
 import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 import { TaskDto } from "../database/dtos/TaskDto";
-import { CreateTaskDto } from "../database/dtos/create/CreateTaskDto";
+
+const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
 
 const TaskRepository = require('../database/repositories/TaskRepository.js');
 
@@ -37,8 +38,11 @@ export class TicketController {
         const foundTicket = await TaskRepository.getTaskById(taskKey);
 
         console.log(foundTicket);
-
+        if (!foundTicket) {
+            throw new Error("There is no task with this id found!");
+        }
         return parseTaskDtoToITicket(foundTicket);
+
     };
 
     public async getTicketsByProjectId(project_id: string): Promise<ITicket[]> {
@@ -58,16 +62,16 @@ export class TicketController {
     };
 
 
-    public async addTicket(ticket: ITicket): Promise<void> {
+    public async addTicket(ticket: ITicket): Promise<ITicket | undefined> {
         console.log(ticket);
 
         const newTicket = new CreateTaskDto(ticket.taskKey, ticket.title, ticket.description,
             ticket.priority, ticket.dueDate, ticket.status, ticket.projectId, ticket.assigneeId);
 
         console.log(newTicket);
-        const createTicket = await TaskRepository.createTask(newTicket);
+        const createTicket: TaskDto = await TaskRepository.createTask(newTicket);
         console.log("Successfully created ticket" + createTicket);
-        return createTicket;
+        return parseTaskDtoToITicket(createTicket);
     };
 
     public async updateTicket(taskKey: number, inputTicket: ITicket): Promise<ITicket | undefined> {
@@ -83,7 +87,7 @@ export class TicketController {
         console.log("Input ticket: ");
         console.log(inputTicket);
 
-        const newTicket: CreateTaskDto = parsedInputTicket(foundTicket, inputTicket);
+        const newTicket = parsedInputTicket(foundTicket, inputTicket);
 
         console.log("!!!!!!!!!!New ticket: ");
         console.log(newTicket);

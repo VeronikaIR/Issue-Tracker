@@ -1,5 +1,5 @@
-class TaskDto {
-    constructor(id, taskKey, title, priority, description, dueDate, status, projectId, assigneeId) {
+ class TaskDto {
+    constructor(id, taskKey, title, description, priority, dueDate, status, projectId, assigneeId) {
         this.id = id;
         this.taskKey = taskKey;
         this.title = title;
@@ -11,5 +11,4 @@ class TaskDto {
         this.assigneeId = assigneeId;
     }
 }
-
 module.exports = TaskDto;

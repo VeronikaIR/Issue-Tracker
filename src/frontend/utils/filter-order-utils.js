@@ -1,44 +1,63 @@
-function filterByAssignee(event) {
+ async function  filterByAssignee(event) {
     event.preventDefault();
     const assignee_id = Number(event.target.previousElementSibling.value);
-
+    if(assignee_id < 1){
+        handleError('Invalid assignee id!');
+        return;
+    }
     const tables = document.querySelectorAll("table");
-    tables.forEach(table => {
+    for (const table of tables) {
         const tbody = table.getElementsByTagName("tbody")[0];
         const rows = [...tbody.children];
-        rows.forEach((row) => {
-            const id = Number(row.firstElementChild.innerHTML);
-            const ticket = file.tasks.filter(task => task.id === id)[0];
-            if (ticket.assignee_id === assignee_id) {
+        for (const row of rows) {
+            const task_key = row.firstElementChild.innerHTML;
+            const id = task_key.replace(/\D/g, '');
+            let task;
+            try {
+                task = await getTicketDataByTicketNumber(id);
+            }
+            catch (error) {
+                console.error(error);
+            }
+            if (task.assigneeId === assignee_id) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
             }
-        });
-    })
+        }
+    }
 
-    event.target.previousElementSibling.value = '';
+     event.target.previousElementSibling.value = '';
 }
 
 
-function dueBeforeDate(event) {
+async function dueBeforeDate(event) {
     event.preventDefault();
     const date = new Date(event.target.previousElementSibling.value);
     const tables = document.querySelectorAll("table");
-    tables.forEach(table => {
+    for (const table of tables) {
         const tbody = table.getElementsByTagName("tbody")[0];
         const rows = [...tbody.children];
-        rows.forEach((row) => {
-            const id = Number(row.firstElementChild.innerHTML);
-            const ticket = file.tasks.filter(task => task.id === id)[0];
-            const ticket_due_date = new Date(ticket.due_date);
+        for (const row of rows) {
+            const task_key = row.firstElementChild.innerHTML;
+            const id = task_key.replace(/\D/g, '');
+            let task;
+            try {
+                task = await getTicketDataByTicketNumber(id);
+            }
+            catch (error) {
+                console.error(error);
+            }
+            const ticket_due_date = new Date(task.dueDate.split('T')[0]);
+            console.log(ticket_due_date);
+            console.log((date));
             if (ticket_due_date <= date) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
             }
-        });
-    })
+        }
+    }
 
 }
 

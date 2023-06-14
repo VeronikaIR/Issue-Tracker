@@ -19,5 +19,5 @@ function handleSuccessCreation(data)
     label.style.color = 'green';
     label.style.display = 'block';
 
-    return data.id;
+    return data;
 }
