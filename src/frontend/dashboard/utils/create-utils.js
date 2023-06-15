@@ -35,7 +35,7 @@ async function createNewTask(event) {
         "priority": modified_priority,
         "dueDate": (form.querySelector('#create_due_date').value).split('T')[0],
         "status": changed_status,
-        "projectId": 3,
+        "projectId": Number(document.querySelector('#proj_id').innerHTML),
         "assigneeId": Number(form.querySelector('#create_assignee_id').value)
     }
 

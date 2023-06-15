@@ -5,6 +5,7 @@ const sendRequest = async (url, options, successCallback, errorCallback) => {
 
         if (status === 200 || status === 201) {
             const data = await result.json();
+    
             successCallback(data);
         } else {
             const error = await result.json();
@@ -24,6 +25,7 @@ const sendAndReturnRequest = async (url, options, successCallback, errorCallback
 
         if (status === 200 || status === 201) {
             const data = await result.json();
+    
            return successCallback(data);
         } else {
             const error = await result.json();

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project List</title>
+  <link rel="stylesheet" href="styles/reset-css.css" type="text/css" />
+    <link rel="stylesheet" href="styles/style.css" type="text/css" />
+    <script defer src="utils/fetch-utils.js"></script>
+    <script defer src="utils/load-utils.js"></script>
+    <script defer src="service/projects-service.js"></script>
+  <script defer src="utils/validate-utils.js"></script>
+  <script defer src="utils/create-utils.js"></script>
+  <script defer src="utils/delete-utils.js"></script>
+  <script defer src="utils/message-utils.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+<h1>Your Projects</h1>
+<table>
+  <thead>
+  <tr>
+    <th>#ID</th>
+    <th>Project</th>
+    <th>Description</th>
+    <th></th>
+
+  </tr>
+  </thead>
+<tbody class="table-body">
+<!--  &lt;!&ndash; Example project rows &ndash;&gt;-->
+<!--   <tr>-->
+<!--      <td>1</td>-->
+<!--      <td class="project_name"> <a href="../dashboard/dashboard.html" >Project 1</a></td>-->
+<!--      <td>JavaScript Project for Issue Tracker</td>-->
+<!--      <td><button class="btn delete">update</button></td>-->
+<!--  </tr>-->
+<!--  <tr>-->
+<!--      <td>4</td>-->
+<!--      <td class="project_name"><a  href="../dashboard/dashboard.html" >Project 2</a></td>-->
+<!--      <td>Java Project for Event Planning and Collaboration Tool</td>-->
+<!--      <td><button class="btn delete">update</button></td>-->
+<!--  </tr>-->
+</tbody>
+</table>
+
+<form class="create_project" style="display:none;">
+  <div>
+    <label for="create_name">Create name:</label>
+    <input id="create_name" type="text" name="create_name">
+  </div>
+
+  <div>
+    <label for="create_description">Create description:</label>
+    <input id="create_description" type="text" name="create_description">
+  </div>
+  <div>
+    <label for="create_lead_user_id">Create lead user id:</label>
+    <input id="create_lead_user_id" type="number" name="create_lead_user_id">
+  </div>
+  <div>
+    <input id="create_new_project" type="submit" name="Create" value="Create">
+  </div>
+</form>
+<label id="message"></label>
+<footer>
+  <button id="new-button">New Project</button>
+</footer>
+</body>
+</html>

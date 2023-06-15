@@ -2,8 +2,8 @@
 // const showtickets = require('../utils/show-tickets');
 // const handleError = require('../utils/handle-error');
 
-const getTicketsData = () => {
-    const url = 'http://localhost:3000/tickets';
+const getTicketsData = (project_key) => {
+    const url = `http://localhost:3000/tickets/tickets-by-project/${project_key}`;
 
     const options = {
         method: 'GET',

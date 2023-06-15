@@ -1,5 +1,15 @@
 (function () {
-    getTicketsData();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectNumber = urlParams.get('proj');
+    getTicketsData(projectNumber);
+    const proj_number = document.createElement('label');
+    proj_number.setAttribute('id', 'proj_id');
+    proj_number.style.display = 'none';
+    proj_number.innerHTML = projectNumber;
+
+    const body = document.querySelector('body');
+    body.append(proj_number);
     //filters and order
     const btnSelectOrder = document.getElementById("select_order");
 
