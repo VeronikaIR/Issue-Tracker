@@ -6,4 +6,4 @@ class UserDto {
     }
 }
 
-module.exports = UserDto;
+export default UserDto;

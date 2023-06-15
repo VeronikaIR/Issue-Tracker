@@ -1,5 +1,6 @@
 const db = require('../database');
 const UserDto = require("../dtos/UserDto");
+const bcrypt = require('bcrypt');
 
 class UserRepository {
     async createUser(user) {
@@ -8,10 +9,53 @@ class UserRepository {
             VALUES ($1, $2, $3)
             RETURNING *
         `;
-        const values = [user.name, user.email, user.hashedPassword];
+
+        let hashedPassword= "";
+        bcrypt.genSalt(15, function(err, salt) {
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                hashedPassword = hash;
+            });
+        });
+
+        const values = [user.name, user.email, hashedPassword];
         const {rows} = await db.pool.query(query, values);
 
         return new UserDto(rows[0].id, rows[0].name, rows[0].email);
+    }
+    
+    //register
+    async checkIfUserExists(username) {
+        const query = `
+            SELECT *
+            FROM users
+            WHERE name = $1
+        `;
+        const values = [username];
+        const {rows} = await db.pool.query(query, values);
+
+        return rows.length > 0 ? true : false;
+    }
+    
+    //login
+    async validateUser(username,password){
+        const query = `
+            SELECT *
+            FROM users
+            WHERE name = $1 AND
+            hashed_password = $2
+        `;
+
+        let hashedPassword= "";
+        bcrypt.genSalt(15, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                hashedPassword = hash;
+            });
+        });
+
+        const values = [username,hashedPassword];
+        const {rows} = await db.pool.query(query, values);
+
+        return rows.length > 0 ? true : false;
     }
 
     async getUserById(id) {
@@ -54,4 +98,4 @@ class UserRepository {
     }
 }
 
-module.exports = new UserRepository();
+module.export = new UserRepository();

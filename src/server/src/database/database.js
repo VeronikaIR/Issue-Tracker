@@ -34,3 +34,4 @@ async function loadMigrations() {
 }
 
 module.exports = { loadMigrations, pool};
+
