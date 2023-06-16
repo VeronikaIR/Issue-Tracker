@@ -3,13 +3,16 @@
     const urlParams = new URLSearchParams(window.location.search);
     const projectNumber = urlParams.get('proj');
     getTicketsData(projectNumber);
-    const proj_number = document.createElement('label');
-    proj_number.setAttribute('id', 'proj_id');
-    proj_number.style.display = 'none';
-    proj_number.innerHTML = projectNumber;
 
-    const body = document.querySelector('body');
-    body.append(proj_number);
+    const proj_ref = document.getElementById('proj_href');
+    proj_ref.setAttribute('href', '../project_list/projects.html');
+    // const proj_number = document.createElement('label');
+    // proj_number.setAttribute('id', 'proj_id');
+    // proj_number.style.display = 'none';
+    // proj_number.innerHTML = projectNumber;
+
+    // const body = document.querySelector('body');
+    // body.append(proj_number);
     //filters and order
     const btnSelectOrder = document.getElementById("select_order");
 
@@ -44,22 +47,22 @@
 
 
     //show full info for task
-    const infos = document.querySelectorAll(".info");
-    infos.forEach(info => {
-        info.addEventListener('click', async function(event){
-            await showInfoForTask(event);
-        });
-    });
+    // const infos = document.querySelectorAll(".info");
+    // infos.forEach(info => {
+    //     info.addEventListener('click', async function(event){
+    //         await showInfoForTask(event);
+    //     });
+    // });
 
     const hide_btn = document.querySelector('#hide_info_btn');
     hide_btn.addEventListener('click', hideTaskInfo);
 
 
     //update a task
-    const updateBtns = document.querySelectorAll(".update");
-    updateBtns.forEach(updateBtn => {
-        updateBtn.addEventListener('click', makeUpdateForm);
-    });
+    // const updateBtns = document.querySelectorAll(".update");
+    // updateBtns.forEach(updateBtn => {
+    //     updateBtn.addEventListener('click', makeUpdateForm);
+    // });
 
     const form_update = document.querySelector(".update_ticket_info");
     const input_update_btn = form_update.querySelector('#update_task');

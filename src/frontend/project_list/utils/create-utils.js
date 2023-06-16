@@ -38,6 +38,7 @@ async function createNewProject(event)
     }catch (error)
     {
         console.error('Error:', error);
+        return;
     }
 
     const tbody = document.querySelector('tbody');
@@ -49,7 +50,8 @@ async function createNewProject(event)
 
     const td_project_name = document.createElement('td');
     const a_project = document.createElement('a');
-    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${id}`);
+    const take_id = id.split('-')[1];
+    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${take_id}`);
     a_project.innerHTML = project.name;
     td_project_name.append(a_project);
 

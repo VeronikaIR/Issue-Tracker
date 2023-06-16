@@ -16,9 +16,6 @@ async function createNewTask(event) {
         return;
     }
 
-    //const lastTask = file.tasks[file.tasks.length - 1];
-
-    //const id = lastTask.id + 1;
     const priority = form.querySelector('#create_priority').value;
     const modified_priority = priority.charAt(0).toUpperCase() + priority.slice(1);
 
@@ -27,6 +24,8 @@ async function createNewTask(event) {
         return ' ' + match.charAt(1).toUpperCase();
     });
 
+    const projectNumber = new URLSearchParams(window.location.search).get('proj');
+    //const projectNumber = urlParams.get('proj');
     const changed_status = modified_status.charAt(0).toUpperCase() + modified_status.slice(1);
     const task = {
         "taskKey":"0",
@@ -35,7 +34,7 @@ async function createNewTask(event) {
         "priority": modified_priority,
         "dueDate": (form.querySelector('#create_due_date').value).split('T')[0],
         "status": changed_status,
-        "projectId": Number(document.querySelector('#proj_id').innerHTML),
+        "projectId": Number(projectNumber),
         "assigneeId": Number(form.querySelector('#create_assignee_id').value)
     }
 
@@ -46,6 +45,7 @@ async function createNewTask(event) {
     }catch (error)
     {
         console.error('Error:', error);
+        return;
     }
      //  sendTicketData(task).then(data=>{
      //    id = data.id;

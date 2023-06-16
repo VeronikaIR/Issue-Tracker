@@ -14,10 +14,10 @@ getProjectsData();
     });
 
     //delete a project
-    const deleteBtns = document.querySelector('.delete');
-
-    deleteBtns.forEach(deleteBtn=>{
-        deleteBtn.addEventListener('click', deleteProject);
-    })
+    // const deleteBtns = document.querySelector('.delete');
+    //
+    // deleteBtns.forEach(deleteBtn=>{
+    //     deleteBtn.addEventListener('click', deleteProject);
+    // })
 
 }())
