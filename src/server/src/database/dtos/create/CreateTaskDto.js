@@ -1,13 +1,13 @@
 class CreateTaskDto {
-    constructor(task_key, title, description, priority, due_date, status, project_id, assignee_id) {
-        this.task_key = task_key;
+    constructor(taskKey, title, description, priority, dueDate, status, projectId, assigneeId) {
+        this.taskKey = taskKey;
         this.title = title;
         this.description = description;
         this.priority = priority;
-        this.due_date = due_date;
+        this.dueDate = dueDate;
         this.status = status;
-        this.project_id = project_id;
-        this.assignee_id = assignee_id;
+        this.projectId = projectId;
+        this.assigneeId = assigneeId;
     }
 }
 

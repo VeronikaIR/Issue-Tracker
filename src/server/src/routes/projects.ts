@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import {ProjectController} from '../controllers/projects-controller';
+import {IProject} from "../interfaces/projects";
 
 //Define tickets controller
 const projectsController: ProjectController = new ProjectController();
@@ -47,17 +48,17 @@ projectsRouter.get('/:project_key', async (request: Request, response: Response)
     }
 });
 
-// projectsRouter.post('/', async (request: Request, response: Response) => {
-//     const project: IProject = request.body;
-//
-//     try {
-//         await projectsController.addProject(project);
-//         response.status(201).json({message: "project added successfully"});
-//     } catch (error) {
-//         console.error(error);
-//         response.status(500).json({error: "Internal server error"});
-//     }
-// });
+projectsRouter.post('/', async (request: Request, response: Response) => {
+    const project: IProject = request.body;
+
+    try {
+        const cretatedProject =await projectsController.addProject(project);
+        response.status(201).json(cretatedProject);
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({error: "Internal server error"});
+    }
+});
 // projectsRouter.put('/:project_key', async (request: Request, response: Response) => {
 //     const {project_key} = request.params;
 //     const projectData = request.body;
@@ -111,18 +112,18 @@ projectsRouter.get('/:project_key', async (request: Request, response: Response)
 //         response.status(500).json({error: 'Internal server error'});
 //     }
 // });
-// projectsRouter.delete('/:project_key', async (request: Request, response: Response) => {
-//     const {project_key} = request.params;
-//
-//     try {
-//         await projectsController.deleteprojectByProjectKey(Number(project_key));
-//
-//         response.status(200).json({message: "project deleted successfully"});
-//     } catch (error) {
-//         console.error(error);
-//
-//         response.status(500).json({error: 'Internal server error'});
-//     }
-// });
+projectsRouter.delete('/:project_key', async (request: Request, response: Response) => {
+    const {project_key} = request.params;
+
+    try {
+        await projectsController.deleteProjectByProjectKey(project_key);
+
+        response.status(200).json({message: "project deleted successfully"});
+    } catch (error) {
+        console.error(error);
+
+        response.status(500).json({error: 'Internal server error'});
+    }
+});
 
 export default projectsRouter;
