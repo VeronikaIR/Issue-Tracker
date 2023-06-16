@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from 'async_hooks';
 import { UserRepository } from '../../../server/src/database/repositories/UserRepository.js';
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -13,74 +14,73 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let registerEmailError = document.getElementById("registerEmailError");
     let registerPasswordError = document.getElementById("registerPasswordError");
 
-    loginButton.addEventListener("click", (event)=>{
-        const usernameField = document.getElementById("loginUsername").value;
+    loginButton.addEventListener("click", async (event)=>{
+        event.preventDefault();
+        const emailField = document.getElementById("loginEmail").value;
         const passwordField = document.getElementById("loginPassword").value;
 
-        if(UserRepository.validateUser(usernameField, passwordField)){
-            event.preventDefault();
-            window.location.assign("../dashboard.html");
-        } else {
-            event.preventDefault();
+        let credentials;
+        try{
+            credentials = await getLoginInfo(emailField, passwordField);
+        }catch(error){
+            console.error(error);
             loginError.innerHTML = "Invalid Credentials";
-            usernameField.classList.add("error-border");
+            emailField.classList.add("error-border");
             passwordField.classList.add("error-border");
+            return;
         }
+
+        window.location.assign(`../project_list/projects.html?user=${credentials.id}`);
+        
     })
 
-    registerButton.addEventListener("click", (event)=>{
+    registerButton.addEventListener("click", async (event)=>{
         event.preventDefault();
         const usernameField = document.getElementById("registerUsername");
         const emailField = document.getElementById("registerEmail");
         const passwordField = document.getElementById("registerPassword");
-        let isUsernameCorrect = false;
-        let isEmailCorrect = false;
-        let isPasswordCorrect = false;
-
+        
         if(usernameField.value.length < 3){
             event.preventDefault();
             registerUsernameError.innerHTML = "Username is too short";
             usernameField.classList.add("error-border");
+            return;
         }else{
             usernameField.classList.remove("error-border");
             registerUsernameError.innerHTML = "";
-            isUsernameCorrect = true;
         }
 
         if(!isValidEmail(emailField.value.trim())){
             event.preventDefault();
             registerEmailError.innerHTML = "Invalid email";
             emailField.classList.add("error-border");
+            return;
         }else{
             emailField.classList.remove("error-border");
             registerEmailError.innerHTML = "";
-            isEmailCorrect = true;
         }
 
         if(!isValidPassword(passwordField.value.trim())){
             event.preventDefault();
             registerPasswordError.innerHTML = "Password must contain uppercase and lowercase letters, number and '?'";
             passwordField.classList.add("error-border");
+            return;
         }else{
             passwordField.classList.remove("error-border");
             registerPasswordError.innerHTML = "";
-            isPasswordCorrect = true;
         }
 
+        const user = {"username" : usernameField, "email": emailField, "password": passwordField};
 
-        if(isUsernameCorrect && isEmailCorrect && isPasswordCorrect){
-            if(UserRepository.checkIfUserExists(usernameField)){
-                //error
-                registerUsernameError.innerHTML = "Username already exists";
-                usernameField.classList.add("error-border");
-            }else{
-                usernameField.classList.remove("error-border");
-                registerUsernameError.innerHTML = "";
-                
-                UserRepository.createUser({name:usernameField,email:emailField,password:passwordField});
-                window.location.assign("../dashboard.html");
-            }
+        let credentials;
+        try{
+            credentials = await register(user);
+        }catch(error){
+            console.error(error);
+            return;
         }
+        window.location.assign(`../project_list/projects.html?user=${credentials.id}`);
+
     })
 
     document.querySelector("#toRegister")
