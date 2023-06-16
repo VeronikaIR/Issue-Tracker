@@ -7,14 +7,14 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: 'admin123',
+    password: 'postgres',
     port: '5432',
 });
 
 async function loadMigrations() {
 
     // get all migration files from the migrations directory
-    const migrationDir = path.join(__dirname, './migrations');
+    const migrationDir = path.join(__dirname, '../migrations');
     const migrationFiles = fs.readdirSync(migrationDir);
 
     // sort the migration files by their timestamp prefix

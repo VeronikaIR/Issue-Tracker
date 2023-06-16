@@ -1,6 +1,5 @@
-const db = require('../database');
+const db = require('../dataBaseConfig/database');
 const UserDto = require("../dtos/UserDto");
-const bcrypt = require('bcrypt');
 
 class UserRepository {
 
@@ -25,52 +24,45 @@ class UserRepository {
             RETURNING *
         `;
 
-        let hashedPassword= "";
-        bcrypt.genSalt(15, function(err, salt) {
-            bcrypt.hash(user.password, salt, function(err, hash) {
-                hashedPassword = hash;
-            });
-        });
-
-        const values = [user.name, user.email, hashedPassword];
+        const values = [user.name, user.email, user.hashedPassword];
         const {rows} = await db.pool.query(query, values);
         return new UserDto(rows[0].id, rows[0].name, rows[0].email, rows[0].hashed_password);
     }
     
-    //register
-    async checkIfUserExists(username) {
-        const query = `
-            SELECT *
-            FROM users
-            WHERE name = $1
-        `;
-        const values = [username];
-        const {rows} = await db.pool.query(query, values);
+    // //register
+    // async checkIfUserExists(username) {
+    //     const query = `
+    //         SELECT *
+    //         FROM users
+    //         WHERE name = $1
+    //     `;
+    //     const values = [username];
+    //     const {rows} = await db.pool.query(query, values);
 
-        return rows.length > 0 ? true : false;
-    }
+    //     return rows.length > 0 ? true : false;
+    // }
     
     //login
-    async validateUser(username,password){
-        const query = `
-            SELECT *
-            FROM users
-            WHERE name = $1 AND
-            hashed_password = $2
-        `;
+    // async validateUser(username,password){
+    //     const query = `
+    //         SELECT *
+    //         FROM users
+    //         WHERE name = $1 AND
+    //         hashed_password = $2
+    //     `;
 
-        let hashedPassword= "";
-        bcrypt.genSalt(15, function(err, salt) {
-            bcrypt.hash(password, salt, function(err, hash) {
-                hashedPassword = hash;
-            });
-        });
+    //     let hashedPassword= "";
+    //     bcrypt.genSalt(15, function(err, salt) {
+    //         bcrypt.hash(password, salt, function(err, hash) {
+    //             hashedPassword = hash;
+    //         });
+    //     });
 
-        const values = [username,hashedPassword];
-        const {rows} = await db.pool.query(query, values);
+    //     const values = [username,hashedPassword];
+    //     const {rows} = await db.pool.query(query, values);
 
-        return rows.length > 0 ? true : false;
-    }
+    //     return rows.length > 0 ? true : false;
+    // }
 
     async getUserById(id) {
         const query = `

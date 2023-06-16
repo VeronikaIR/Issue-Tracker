@@ -1,4 +1,4 @@
-const db = require('../database.js');
+const db = require('../dataBaseConfig/database');
 const ProjectDto = require("../dtos/ProjectDto");
 
 class ProjectRepository {

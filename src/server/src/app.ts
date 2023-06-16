@@ -2,14 +2,15 @@ import * as express from 'express';
 import * as cors from 'cors';
 import tickets from './routes/tickets';
 import projects from './routes/projects';
-import {loadMigrations} from './database/database.js';
+//import {loadMigrations} from './database/dataBaseConfig/';
 import users from "./routes/users";
 
+import db = require('./database/dataBaseConfig/database');
 //Load database
-loadMigrations();
+db.loadMigrations();
 
 
-//Server setup
+/*//Server setup
 const app = express();
 app.use(cors());
 app.use(express.json({ type: 'application/json' }));
@@ -19,13 +20,13 @@ app.use('/tickets', tickets);
 app.use('/projects', projects);
 app.use('/users', users);
 
-app.listen(3000, () => {console.log("The server is running on port 3000...")});
+app.listen(3000, () => {console.log("The server is running on port 3000...")});*/
 
 //to load test data in the tables
 //
-/*const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
-const  CreateUserDto  = require('./database/dtos/create/CreateUserDto');
-const CreateProjectDto = require('./database/dtos/create/CreateProjectDto');
+const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto.js');
+const  CreateUserDto  = require('./database/dtos/create/CreateUserDto.js');
+const CreateProjectDto = require('./database/dtos/create/CreateProjectDto.js');
 const UserRepository  = require('./database/repositories/UserRepository');
 const ProjectRepository  = require('./database/repositories/ProjectRepository');
 const  TaskRepository  = require('./database/repositories/TaskRepository');
@@ -177,4 +178,4 @@ async function runDemo() {
     console.log('-----END OF THE DEMO-----');
  }
 
-runDemo();*/
+runDemo();
