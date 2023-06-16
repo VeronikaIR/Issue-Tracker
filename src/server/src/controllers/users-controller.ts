@@ -49,12 +49,8 @@ export class UsersController {
     public async checkForValidUser(email: string, password: string): Promise<IUser | undefined> {
         const foundUser = this.usersCollection.find((currUser) => email === currUser.email);
 
-        console.log(foundUser);
-        console.log(password);
-        console.log(foundUser.password);
         if (foundUser) {
             const validPassword = await bcrypt.compare(password, foundUser.password);
-
             if (validPassword) {
                 return foundUser;
             }
@@ -71,19 +67,12 @@ export class UsersController {
             };
         }
 
-        if (userData.password === '' || userData.password.length < 9) {
+        if (userData.password === '' || userData.password.length < 6) {
             return {
                 valid: false,
-                message: 'Password must be at least 9 characters'
+                message: 'Password must be at least 6 characters'
             };
         }
-
-        // if (userData.password !== userData.confirmPassword) {
-        //     return {
-        //         valid: false,
-        //         message: 'Confirm password must match passsword'
-        //     };
-        // }
 
         return {
             valid: true,

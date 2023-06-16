@@ -7,7 +7,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: 'admin123',
+    password: 'postgres',
     port: '5432',
 });
 
@@ -34,3 +34,4 @@ async function loadMigrations() {
 }
 
 module.exports = { loadMigrations, pool};
+

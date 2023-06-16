@@ -2,24 +2,25 @@ import * as express from 'express';
 import * as cors from 'cors';
 import tickets from './routes/tickets';
 import projects from './routes/projects';
-import {loadMigrations} from './database/database.js';
+//import {loadMigrations} from './database/dataBaseConfig/';
 import users from "./routes/users";
 
+import db = require('./database/database');
 //Load database
-loadMigrations();
+db.loadMigrations();
 
 
 //Server setup
-// const app = express();
-// app.use(cors());
-// app.use(express.json({ type: 'application/json' }));
-//
-// //Define routes for the endpoints
-// app.use('/tickets', tickets);
-// app.use('/projects', projects);
-// app.use('/users', users);
-//
-// app.listen(3000, () => {console.log("The server is running on port 3000...")});
+const app = express();
+app.use(cors());
+app.use(express.json({ type: 'application/json' }));
+
+//Define routes for the endpoints
+app.use('/tickets', tickets);
+app.use('/projects', projects);
+app.use('/users', users);
+
+app.listen(3000, () => {console.log("The server is running on port 3000...")});
 
 //to load test data in the tables
 //
@@ -177,4 +178,4 @@ async function runDemo() {
     console.log('-----END OF THE DEMO-----');
  }
 
-runDemo();
+//runDemo();
