@@ -10,20 +10,20 @@ loadMigrations();
 
 
 //Server setup
-const app = express();
-app.use(cors());
-app.use(express.json({ type: 'application/json' }));
-
-//Define routes for the endpoints
-app.use('/tickets', tickets);
-app.use('/projects', projects);
-app.use('/users', users);
-
-app.listen(3000, () => {console.log("The server is running on port 3000...")});
+// const app = express();
+// app.use(cors());
+// app.use(express.json({ type: 'application/json' }));
+//
+// //Define routes for the endpoints
+// app.use('/tickets', tickets);
+// app.use('/projects', projects);
+// app.use('/users', users);
+//
+// app.listen(3000, () => {console.log("The server is running on port 3000...")});
 
 //to load test data in the tables
 //
-/*const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
+const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
 const  CreateUserDto  = require('./database/dtos/create/CreateUserDto');
 const CreateProjectDto = require('./database/dtos/create/CreateProjectDto');
 const UserRepository  = require('./database/repositories/UserRepository');
@@ -177,4 +177,4 @@ async function runDemo() {
     console.log('-----END OF THE DEMO-----');
  }
 
-runDemo();*/
+runDemo();

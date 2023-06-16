@@ -37,7 +37,7 @@ class UserRepository {
         const values = [id];
         const {rows} = await db.pool.query(query, values);
 
-        return new UserDto(rows[0].id, rows[0].name, rows[0].email, row[0].hashed_password);
+        return new UserDto(rows[0].id, rows[0].name, rows[0].email, rows[0].hashed_password);
     }
 
     async updateUserById(id, user) {
@@ -52,7 +52,7 @@ class UserRepository {
         const values = [user.name, user.email, user.hashedPassword, id];
         const {rows} = await db.pool.query(query, values);
 
-        return new UserDto(rows[0].id, rows[0].name, rows[0].email, row[0].hashed_password);
+        return new UserDto(rows[0].id, rows[0].name, rows[0].email, rows[0].hashed_password);
     }
 
     async deleteUserById(id) {
@@ -64,7 +64,7 @@ class UserRepository {
         `;
         const values = [id];
         const {rows} = await db.pool.query(query, values);
-        return new UserDto(rows[0].id, rows[0].name, rows[0].email, row[0].hashed_password);
+        return new UserDto(rows[0].id, rows[0].name, rows[0].email, rows[0].hashed_password);
     }
 }
 
