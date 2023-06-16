@@ -1,5 +1,15 @@
 (function () {
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectNumber = urlParams.get('proj');
+    getTicketsData(projectNumber);
+    const proj_number = document.createElement('label');
+    proj_number.setAttribute('id', 'proj_id');
+    proj_number.style.display = 'none';
+    proj_number.innerHTML = projectNumber;
+
+    const body = document.querySelector('body');
+    body.append(proj_number);
     //filters and order
     const btnSelectOrder = document.getElementById("select_order");
 
@@ -23,16 +33,22 @@
     });
 
     const filter_assignee_btn = document.getElementById('filter_assignee_btn');
-    filter_assignee_btn.addEventListener('click', filterByAssignee);
+    filter_assignee_btn.addEventListener('click', async function(event){
+        await filterByAssignee(event);
+    });
 
     const before_due_date_btn = document.getElementById('before_due_date_btn');
-    before_due_date_btn.addEventListener('click', dueBeforeDate);
+    before_due_date_btn.addEventListener('click', async function(event){
+        await dueBeforeDate(event);
+    });
 
 
     //show full info for task
     const infos = document.querySelectorAll(".info");
     infos.forEach(info => {
-        info.addEventListener('click', showInfoForTask);
+        info.addEventListener('click', async function(event){
+            await showInfoForTask(event);
+        });
     });
 
     const hide_btn = document.querySelector('#hide_info_btn');
@@ -59,9 +75,12 @@
 
     const form_create = document.querySelector('.create_ticket');
     const input_create_btn = form_create.querySelector('#create_new_task');
-    input_create_btn.addEventListener('click', createNewTask);
+    input_create_btn.addEventListener('click', async function(event)
+    {
+        await createNewTask(event);
+    });
 
-
+   
 
 }())
 

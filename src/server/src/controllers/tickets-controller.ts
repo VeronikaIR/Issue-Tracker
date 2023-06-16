@@ -1,20 +1,20 @@
-import {ITicket, ITicketData} from "../interfaces/tickets";
+import {ITicket} from "../interfaces/tickets";
 import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
+import { TaskDto } from "../database/dtos/TaskDto";
 
 const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
-import {TaskDto} from "../database/dtos/TaskDto";
 
-const TaskRepository = require('../database/repositories/TaskRepository');
+const TaskRepository = require('../database/repositories/TaskRepository.js');
 
 export class TicketController {
-    private ticketsCollection: ITicketData;
+    private ticketsCollection: ITicket[];
 
     constructor() {
     }
 
     public async init() {
         try {
-            const tickets = await TaskRepository.findAllTasks();
+            const tickets: TaskDto[] = await TaskRepository.findAllTasks();
             console.log(tickets);
             this.ticketsCollection = tickets.map((ticket) => {
                 console.log("Before: ");
@@ -30,31 +30,53 @@ export class TicketController {
     };
 
 
-    public async getTicketsData(): Promise<ITicketData> {
+    public async getTicketsData(): Promise<ITicket[]> {
         return this.ticketsCollection;
     };
 
-    public async getTicketByTaskKey(task_key: string): Promise<ITicket | undefined> {
-        const foundTicket = await TaskRepository.getTaskById(task_key);
+    public async getTicketByTaskKey(taskKey: string): Promise<ITicket | undefined> {
+        const foundTicket = await TaskRepository.getTaskById(taskKey);
 
         console.log(foundTicket);
-
+        if (!foundTicket) {
+            throw new Error("There is no task with this id found!");
+        }
         return parseTaskDtoToITicket(foundTicket);
+
     };
 
-    public async addTicket(ticket: ITicket): Promise<void> {
-        const task_key: string = "TASK-3";
+    public async getTicketsByProjectId(project_id: string): Promise<ITicket[]> {
+        const foundTickets = await TaskRepository.getAllTasksByProjectId(project_id);
 
-        const newTicket = new CreateTaskDto(task_key, ticket.title, ticket.description,
-            ticket.priority, ticket.due_date, ticket.status, 1, 1);
+        console.log(foundTickets);
 
-        const createTicket = await TaskRepository.createTask(newTicket);
+        return foundTickets.map((ticket) => {
+            console.log("Before: ");
+            console.log(ticket);
+            const parsedObej = parseTaskDtoToITicket(ticket);
+            console.log("Parsed:");
+            console.log(parsedObej);
+            return parsedObej;
+        });
+
+    };
+
+
+    public async addTicket(ticket: ITicket): Promise<ITicket | undefined> {
+        console.log(ticket);
+
+        const newTicket = new CreateTaskDto(ticket.taskKey, ticket.title, ticket.description,
+            ticket.priority, ticket.dueDate, ticket.status, ticket.projectId, ticket.assigneeId);
+
+        console.log(newTicket);
+        const createTicket: TaskDto = await TaskRepository.createTask(newTicket);
         console.log("Successfully created ticket" + createTicket);
+        return parseTaskDtoToITicket(createTicket);
     };
 
-    public async updateTicket(task_key: Number, input_ticket: ITicket): Promise<ITicket | undefined> {
+    public async updateTicket(taskKey: number, inputTicket: ITicket): Promise<ITicket | undefined> {
 
-        const foundTicket = await TaskRepository.getTaskById(task_key);
+        const foundTicket = await TaskRepository.getTaskById(taskKey);
 
         if (!foundTicket) {
             throw new Error("There is no task with this id found!");
@@ -63,13 +85,13 @@ export class TicketController {
         console.log("Found ticket: ");
         console.log(foundTicket);
         console.log("Input ticket: ");
-        console.log(input_ticket);
+        console.log(inputTicket);
 
-        const newTicket = parsedInputTicket(foundTicket, input_ticket);
+        const newTicket = parsedInputTicket(foundTicket, inputTicket);
 
-        console.log("New ticket: ");
+        console.log("!!!!!!!!!!New ticket: ");
         console.log(newTicket);
-        const updatedTicket: TaskDto = await TaskRepository.updateTaskById(task_key, newTicket);
+        const updatedTicket: TaskDto = await TaskRepository.updateTaskById(taskKey, newTicket);
 
         console.log("Successfully updated ticket" + updatedTicket);
 

@@ -1,75 +1,62 @@
 import {ITicket} from "../interfaces/tickets";
-import {Timestamp} from "mongodb";
-import tickets from "../routes/tickets";
 
 const CreateTaskDto = require("../database/dtos/create/CreateTaskDto");
-
 
 export function parseTaskDtoToITicket(ticket): ITicket {
     return {
         id: ticket.id,
-        task_key: ticket.task_key,
+        taskKey: ticket.taskKey,
         title: ticket.title,
         description: ticket.description,
         priority: ticket.priority,
-        due_date: new Date(ticket.due_date),
+        dueDate: new Date(ticket.dueDate),
         status: ticket.status,
-        project_id: ticket.project_id,
-        assignee_id: ticket.assignee_id
+        projectId: ticket.projectId,
+        assigneeId: ticket.assigneeId
     };
 }
 
-export function parsedInputTicket(ticket, input_ticket) {
-    let task_key: string = ticket.task_key;
+export function parsedInputTicket(ticket, inputTicket) {
+    let taskKey: string = ticket.taskKey;
     let title: string = ticket.title;
     let description: string = ticket.description;
     let priority: string = ticket.priority;
-    let due_date: Timestamp = ticket.due_date;
+    let dueDate = ticket.dueDate;
     let status: string = ticket.status;
-    let project_id: number = ticket.project_id;
-    let assignee_id: number = ticket.assignee_id;
+    let projectId: number = ticket.projectId;
+    let assigneeId: number = ticket.assigneeId;
 
-    console.log(input_ticket.description);
-
-    if (input_ticket.task_key
-        && ticket.task_key == !input_ticket.task_key) {
-        task_key = input_ticket.task_key;
+    if (inputTicket.taskKey) {
+        taskKey = inputTicket.taskKey;
     }
 
-    if (input_ticket.title
-        && ticket.title == !input_ticket.title) {
-        title = input_ticket.title;
+    if (inputTicket.title) {
+        title = inputTicket.title;
     }
 
-    if (input_ticket.description
-        && ticket.description == !input_ticket.description) {
-        description = input_ticket.description;
+    if (inputTicket.description) {
+        description = inputTicket.description;
     }
 
-    if (input_ticket.priority
-        && ticket.priority == !input_ticket.priority) {
-        priority = input_ticket.priority;
+    if (inputTicket.priority) {
+        priority = inputTicket.priority;
     }
 
-    if (input_ticket.due_date
-        && ticket.due_date == !input_ticket.due_date) {
-        due_date = new Timestamp(input_ticket.due_date);
+    if (inputTicket.dueDate) {
+        dueDate = inputTicket.dueDate;
     }
 
-    if (input_ticket.status
-        && ticket.status == !input_ticket.status) {
-        status = input_ticket.status;
+    if (inputTicket.status) {
+        status = inputTicket.status;
     }
 
-    if (input_ticket.project_id
-        && ticket.project_id == !input_ticket.project_id) {
-        project_id = input_ticket.project_id;
+    if (inputTicket.projectId) {
+        projectId = inputTicket.projectId;
     }
 
-    if (input_ticket.assignee_id
-        && ticket.assignee_id == !input_ticket.assignee_id) {
-        assignee_id = input_ticket.assignee_id;
+    if (inputTicket.assigneeId) {
+        assigneeId = inputTicket.assigneeId;
     }
 
-    return new CreateTaskDto(task_key, title, description, priority, due_date, status, project_id, assignee_id);
+    return new CreateTaskDto(taskKey, title, description, priority, dueDate, status, projectId, assigneeId);
 }

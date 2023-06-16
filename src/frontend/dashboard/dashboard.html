@@ -5,6 +5,9 @@
     <title> Issue Tracker Dashboard</title>
     <link rel="stylesheet" href="styles/reset-css.css" type="text/css" />
     <link rel="stylesheet" href="styles/style.css" type="text/css" />
+    <script defer src="utils/fetch-utils.js"></script>
+    <script defer src="utils/load-utils.js"></script>
+    <script defer src="service/tickets-service.js"></script>
     <script defer src="utils/validate-utils.js"></script>
     <script defer src="utils/create-utils.js"></script>
     <script defer src="utils/message-utils.js"></script>
@@ -20,7 +23,6 @@
     <header id="top-bar">
         <nav>
             <a href='#'>Projects</a>
-            <a href='#'>Prod</a>
             <a href='#'>Logout</a>
         </nav>
         <h1>Dashboard</h1>
@@ -58,7 +60,7 @@
         </section>
 
         <section class="todo">
-            <h2>Todo</h2>
+            <h2>To Do</h2>
             <table>
                 <thead>
                     <tr>
@@ -70,7 +72,7 @@
                 </thead>
                 <tbody class="table-body">
                     <!-- Example issue rows -->
-                    <tr>
+                    <!-- <tr>
                         <td>1</td>
                         <td><a class="info" href='#'>Create login page </a></td>
                         <td class="low">Low</td>
@@ -81,7 +83,7 @@
                         <td> <a class="info" href='#'>Add search functionality </a> </td>
                         <td class="medium">Medium</td>
                         <td><button class="btn update">update</button></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </section>
@@ -99,7 +101,7 @@
                 </thead>
                 <tbody class="table-body">
                     <!-- Example issue rows -->
-                    <tr>
+                    <!-- <tr>
                         <td>3</td>
                         <td> <a class="info" href='#'>Fix formatting issues</a></td>
                         <td class="high">High</td>
@@ -110,7 +112,7 @@
                         <td><a class="info" href='#'>Fix button issues</a></td>
                         <td class="medium">Medium</td>
                         <td><button class="btn update">update</button></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </section>
@@ -128,7 +130,7 @@
                 </thead>
                 <tbody class="table-body">
                     <!-- Example issue rows -->
-                    <tr>
+                    <!-- <tr>
                         <td>5</td>
                         <td><a class="info" href='#'>Refactor database queries</a></td>
                         <td class="low">Low</td>
@@ -139,7 +141,7 @@
                         <td><a class="info" href='#'>Refactor layout</a></td>
                         <td class="medium">Medium</td>
                         <td><button class="btn update">update</button></td>
-                    </tr>
+                    </tr> -->
 
                 </tbody>
             </table>
@@ -158,7 +160,7 @@
                 </thead>
                 <tbody class="table-body">
                     <!-- Example issue rows -->
-                    <tr>
+                    <!-- <tr>
                         <td>7</td>
                         <td><a class="info" href='#'>Implement user authentication</a></td>
                         <td class="medium">Medium</td>
@@ -169,7 +171,7 @@
                         <td><a class="info" href='#'>Optimize page load times</a></td>
                         <td class="low">Low</td>
                         <td><button class="btn update">update</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </section>
@@ -183,6 +185,7 @@
         <div>
             <label>Update ticket: </label>
             <label id="take_id"></label>
+            <label id="take_status" style="display:none;"></label>
 
         </div>
         <div>

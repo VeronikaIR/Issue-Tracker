@@ -7,8 +7,7 @@ function makeCreateForm(event) {
 
 }
 
-
-function createNewTask(event) {
+async function createNewTask(event) {
     event.preventDefault();
     const form = document.querySelector('.create_ticket');
     const isDataValid = validateData(form);
@@ -17,9 +16,9 @@ function createNewTask(event) {
         return;
     }
 
-    const lastTask = file.tasks[file.tasks.length - 1];
+    //const lastTask = file.tasks[file.tasks.length - 1];
 
-    const id = lastTask.id + 1;
+    //const id = lastTask.id + 1;
     const priority = form.querySelector('#create_priority').value;
     const modified_priority = priority.charAt(0).toUpperCase() + priority.slice(1);
 
@@ -30,17 +29,30 @@ function createNewTask(event) {
 
     const changed_status = modified_status.charAt(0).toUpperCase() + modified_status.slice(1);
     const task = {
-        "id": id,
+        "taskKey":"0",
         "title": form.querySelector('#create_title').value,
-        "priority": modified_priority,
         "description": form.querySelector('#create_description').value,
-        "due_date": form.querySelector('#create_due_date').value,
+        "priority": modified_priority,
+        "dueDate": (form.querySelector('#create_due_date').value).split('T')[0],
         "status": changed_status,
-        "project_id": 1,
-        "assignee_id": Number(form.querySelector('#create_assignee_id').value)
+        "projectId": Number(document.querySelector('#proj_id').innerHTML),
+        "assigneeId": Number(form.querySelector('#create_assignee_id').value)
     }
 
-    file.tasks.push(task);
+    let id;
+    try{
+        const taskEntity = await sendTicketData(task);
+        id = 'TASK-' + taskEntity.id;
+    }catch (error)
+    {
+        console.error('Error:', error);
+    }
+     //  sendTicketData(task).then(data=>{
+     //    id = data.id;
+     // }).catch((error) => {
+     //    console.error('Error:', error);
+     //  });
+    //file.tasks.push(task);
 
     const tr_task = document.createElement('tr');
 

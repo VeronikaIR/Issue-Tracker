@@ -1,11 +1,11 @@
 class ProjectDto {
-    constructor(id, project_key, name, description, creation_date, lead_user_id) {
+    constructor(id, projectKey, name, description, creationDate, leadUserId) {
         this.id = id;
-        this.project_key = project_key;
+        this.projectKey = projectKey;
         this.name = name;
         this.description = description;
-        this.creation_date =  creation_date;
-        this.lead_user_id = lead_user_id;
+        this.creationDate =  creationDate;
+        this.leadUserId = leadUserId;
     }
 }
 
