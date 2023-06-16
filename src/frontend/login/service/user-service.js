@@ -32,3 +32,7 @@ const register = async (userData) => {
 
     return await sendAndReturnRequest(url, options, showCredentials, handleError);
 };
+
+function handleError (data) {
+    console.log(data);
+}

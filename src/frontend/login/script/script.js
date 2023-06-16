@@ -1,6 +1,3 @@
-import { AsyncLocalStorage } from 'async_hooks';
-import { UserRepository } from '../../../server/src/database/repositories/UserRepository.js';
-
 document.addEventListener("DOMContentLoaded", ()=>{
 
     let loginForm = document.querySelector("#login-container");
@@ -70,7 +67,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             registerPasswordError.innerHTML = "";
         }
 
-        const user = {"username" : usernameField, "email": emailField, "password": passwordField};
+        const user = {"username" : usernameField.value, "email": emailField.value, "password": passwordField.value};
 
         let credentials;
         try{

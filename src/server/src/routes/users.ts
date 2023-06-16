@@ -50,7 +50,8 @@ usersRouter.post('/register', validateUser, async (request, response) => {
 });
 
 usersRouter.get('/login', async (request, response) => {
-    const {email, password} = request.body;
+    const email = request.query.email.toString();
+    const password = request.query.password.toString();
     try {
         const foundUser = await usersController.checkForValidUser(email, password);
         if (foundUser) {
