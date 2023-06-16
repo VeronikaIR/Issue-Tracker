@@ -18,6 +18,7 @@
             }
             catch (error) {
                 console.error(error);
+                return;
             }
             if (task.assigneeId === assignee_id) {
                 row.style.display = "";
@@ -47,6 +48,7 @@ async function dueBeforeDate(event) {
             }
             catch (error) {
                 console.error(error);
+                return;
             }
             const ticket_due_date = new Date(task.dueDate.split('T')[0]);
             console.log(ticket_due_date);

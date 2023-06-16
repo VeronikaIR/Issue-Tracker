@@ -18,6 +18,7 @@ async function showInfoForTask(event) {
     }
     catch (error) {
         console.error(error);
+        return;
     }
 
     const section = document.querySelector('.info_task');
@@ -35,7 +36,7 @@ async function showInfoForTask(event) {
     p_description.innerHTML = 'Description: ' + task.description;
 
     const p_due_date = section.querySelector('#p_due_date');
-    p_due_date.innerHTML = 'Due Date: ' + task.dueDate;
+    p_due_date.innerHTML = 'Due Date: ' + task.dueDate.split('T')[0];
 
     const p_status = section.querySelector('#p_status');
     p_status.innerHTML = 'Status: ' + task.status;
