@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import tickets from './routes/tickets';
 import projects from './routes/projects';
 import {loadMigrations} from './database/database.js';
+import users from "./routes/users";
 
 //Load database
 loadMigrations();
@@ -16,6 +17,7 @@ app.use(express.json({ type: 'application/json' }));
 //Define routes for the endpoints
 app.use('/tickets', tickets);
 app.use('/projects', projects);
+app.use('/users', users);
 
 app.listen(3000, () => {console.log("The server is running on port 3000...")});
 
