@@ -1,4 +1,4 @@
-const db = require('../dataBaseConfig/database');
+const db = require('../database');
 const TaskDto = require("../dtos/TaskDto");
 const ProjectDto = require("../dtos/ProjectDto");
 class TaskRepository {

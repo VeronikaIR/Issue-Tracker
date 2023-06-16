@@ -5,7 +5,7 @@ import projects from './routes/projects';
 //import {loadMigrations} from './database/dataBaseConfig/';
 import users from "./routes/users";
 
-import db = require('./database/dataBaseConfig/database');
+import db = require('./database/database');
 //Load database
 db.loadMigrations();
 
