@@ -1,5 +1,6 @@
 const db = require('../database');
 const ProjectDto = require("../dtos/ProjectDto");
+const TaskDto = require("../dtos/TaskDto");
 
 class ProjectRepository {
     async createProject(project) {
@@ -41,6 +42,19 @@ class ProjectRepository {
         return projects;
     }
 
+    async getAllProjectsByUserId(userId) {
+        const query = `
+            SELECT *
+            FROM projects
+            WHERE lead_user_id = $1
+        `;
+        const values = [userId];
+        const {rows} = await db.pool.query(query, values);
+
+        return rows.map(row => {
+            return new ProjectDto(row.id, row.project_key, row.name, row.description, row.creation_date, row.lead_user_id);
+        });
+    }
 
     async updateProjectById(id, project) {
         const query = `

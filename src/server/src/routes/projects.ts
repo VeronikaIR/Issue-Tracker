@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import {ProjectController} from '../controllers/projects-controller';
 import {IProject} from "../interfaces/projects";
+import ticketsRouter from "./tickets";
 
 //Define tickets controller
 const projectsController: ProjectController = new ProjectController();
@@ -41,6 +42,23 @@ projectsRouter.get('/:project_key', async (request: Request, response: Response)
             response.status(200).json(project);
         } else {
             response.status(404).json({message: "Project not found"});
+        }
+    } catch (error) {
+        console.error(error);
+        response.status(500).json('Internal server error');
+    }
+});
+
+projectsRouter.get('/projects-by-user/:user_id', async (request: Request, response: Response) => {
+    const {user_id} = request.params;
+
+    try {
+        const projects = await projectsController.getProjectsByUserId(Number(user_id));
+
+        if (projects.length > 0) {
+            response.status(200).json(projects);
+        } else {
+            response.status(404).json({message: "Projects not found"});
         }
     } catch (error) {
         console.error(error);
