@@ -1,7 +1,5 @@
 import { IProject} from "../interfaces/projects";
 import {parseProjectDtoToIProject} from "../utils/projects-utils";
-import {ITicket} from "../interfaces/tickets";
-import {parseTaskDtoToITicket} from "../utils/tickets-utils";
 
 import {ProjectDto} from '../database/dtos/ProjectDto';
 const CreateProjectDto = require('../database/dtos/create/CreateProjectDto')
