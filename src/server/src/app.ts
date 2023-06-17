@@ -128,13 +128,13 @@ async function runDemo() {
 
         // Create a task
         const createdTask1 = await TaskRepository.createTask(
-            new CreateTaskDto('Implement Feature X', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature X', 'Implement the new feature with the specified requirements', 'Low', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask1);
 
 
         const createdTask2 = await TaskRepository.createTask(
-            new CreateTaskDto('Implement Feature TEST', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature TEST', 'Implement the new feature with the specified requirements', 'High',new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask2);
 
