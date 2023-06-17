@@ -73,7 +73,7 @@ projectsRouter.post('/', async (request: Request, response: Response) => {
         response.status(201).json(cretatedProject);
     } catch (error) {
         console.error(error);
-        response.status(500).json({error: "Internal server error"});
+        response.status(500).json({message: error.message});
     }
 });
 
