@@ -5,7 +5,6 @@ const CreateTaskDto = require("../database/dtos/create/CreateTaskDto");
 export function parseTaskDtoToITicket(ticket): ITicket {
     return {
         id: ticket.id,
-        taskKey: ticket.taskKey,
         title: ticket.title,
         description: ticket.description,
         priority: ticket.priority,
@@ -17,7 +16,6 @@ export function parseTaskDtoToITicket(ticket): ITicket {
 }
 
 export function parsedInputTicket(ticket, inputTicket) {
-    let taskKey: string = ticket.taskKey;
     let title: string = ticket.title;
     let description: string = ticket.description;
     let priority: string = ticket.priority;
@@ -25,10 +23,6 @@ export function parsedInputTicket(ticket, inputTicket) {
     let status: string = ticket.status;
     let projectId: number = ticket.projectId;
     let assigneeId: number = ticket.assigneeId;
-
-    if (inputTicket.taskKey) {
-        taskKey = inputTicket.taskKey;
-    }
 
     if (inputTicket.title) {
         title = inputTicket.title;
@@ -58,5 +52,5 @@ export function parsedInputTicket(ticket, inputTicket) {
         assigneeId = inputTicket.assigneeId;
     }
 
-    return new CreateTaskDto(taskKey, title, description, priority, dueDate, status, projectId, assigneeId);
+    return new CreateTaskDto(title, description, priority, dueDate, status, projectId, assigneeId);
 }

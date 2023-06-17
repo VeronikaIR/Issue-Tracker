@@ -12,7 +12,7 @@ const getProjectController = async (req: Request, res: Response, next: () => voi
         next();
     } catch (error) {
         console.error(error);
-        res.status(500).json({error: 'Internal server error'});
+        res.status(500).json({error: {message: error.message}});
     }
 };
 
@@ -27,7 +27,7 @@ projectsRouter.get('/', async (request: Request, response: Response) => {
         response.status(200).json(projects);
     } catch (error) {
         console.error(error);
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -44,7 +44,24 @@ projectsRouter.get('/:project_key', async (request: Request, response: Response)
         }
     } catch (error) {
         console.error(error);
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
+    }
+});
+
+projectsRouter.get('/projects-by-user/:user_id', async (request: Request, response: Response) => {
+    const {user_id} = request.params;
+
+    try {
+        const projects = await projectsController.getProjectsByUserId(Number(user_id));
+
+        if (projects.length > 0) {
+            response.status(200).json(projects);
+        } else {
+            response.status(404).json({message: "Projects not found"});
+        }
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -59,59 +76,7 @@ projectsRouter.post('/', async (request: Request, response: Response) => {
         response.status(500).json({error: "Internal server error"});
     }
 });
-// projectsRouter.put('/:project_key', async (request: Request, response: Response) => {
-//     const {project_key} = request.params;
-//     const projectData = request.body;
-//
-//     try {
-//         const projects = await read(projectsJSON);
-//         const parsedprojects = JSON.parse(projects);
-//
-//         const updatedprojects = parsedprojects.projects.map(project => {
-//             if (project.project_key === Number(project_key)) {
-//                 return projectData;
-//             }
-//
-//             return project;
-//         });
-//
-//         parsedprojects.projects = updatedprojects;
-//
-//         await write(projectsJSON, JSON.stringify(parsedprojects));
-//
-//         response.status(200).json({message: 'project updated successfully'});
-//     } catch (error) {
-//         console.error(error);
-//         response.status(500).json({error: 'Internal server error'});
-//     }
-// });
-// projectsRouter.patch('/:project_key', async (request: Request, response: Response) => {
-//     const {project_key} = request.params;
-//     const {title_param} = request.body;
-//
-//     try {
-//         const projects = await read(projectsJSON);
-//         const parsedprojects = JSON.parse(projects);
-//
-//         const updatedprojects = parsedprojects.projects.map(project => {
-//             if (project.project_key === Number(project_key)) {
-//                 project.title = title_param;
-//             }
-//
-//             return project;
-//         });
-//
-//         parsedprojects.projects = updatedprojects;
-//
-//         await write(projectsJSON, JSON.stringify(parsedprojects));
-//
-//         response.status(200).json({message: 'project updated successfully'});
-//     } catch (error) {
-//         console.error(error);
-//
-//         response.status(500).json({error: 'Internal server error'});
-//     }
-// });
+
 projectsRouter.delete('/:project_key', async (request: Request, response: Response) => {
     const {project_key} = request.params;
 
@@ -122,7 +87,7 @@ projectsRouter.delete('/:project_key', async (request: Request, response: Respon
     } catch (error) {
         console.error(error);
 
-        response.status(500).json({error: 'Internal server error'});
+        response.status(500).json({error: {message: error.message}});
     }
 });
 

@@ -25,7 +25,6 @@ async function createNewProject(event)
     const formattedDate = `${year}-${month}-${day}`;
 
     const project = {
-        "projectKey": "0",
         "name": form.querySelector('#create_name').value,
         "description": form.querySelector('#create_description').value,
         "creationDate": formattedDate,

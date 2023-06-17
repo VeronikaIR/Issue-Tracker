@@ -1,14 +1,19 @@
 import * as express from 'express';
 import * as cors from 'cors';
+import {loadMigrations} from './database/database';
 import tickets from './routes/tickets';
 import projects from './routes/projects';
-//import {loadMigrations} from './database/dataBaseConfig/';
 import users from "./routes/users";
 
-import db = require('./database/database');
-//Load database
-db.loadMigrations();
+const CreateTaskDto = require('./database/dtos/create/CreateTaskDto');
+const CreateUserDto = require('./database/dtos/create/CreateUserDto');
+const CreateProjectDto = require('./database/dtos/create/CreateProjectDto');
+const UserRepository = require('./database/repositories/UserRepository');
+const ProjectRepository = require('./database/repositories/ProjectRepository');
+const TaskRepository = require('./database/repositories/TaskRepository');
 
+//Load database
+loadMigrations();
 
 //Server setup
 const app = express();
@@ -21,16 +26,6 @@ app.use('/projects', projects);
 app.use('/users', users);
 
 app.listen(3000, () => {console.log("The server is running on port 3000...")});
-
-//to load test data in the tables
-//
-const CreateTaskDto  = require('./database/dtos/create/CreateTaskDto');
-const  CreateUserDto  = require('./database/dtos/create/CreateUserDto');
-const CreateProjectDto = require('./database/dtos/create/CreateProjectDto');
-const UserRepository  = require('./database/repositories/UserRepository');
-const ProjectRepository  = require('./database/repositories/ProjectRepository');
-const  TaskRepository  = require('./database/repositories/TaskRepository');
-
 
 async function runDemo() {
     try {
@@ -83,13 +78,13 @@ async function runDemo() {
 
         // Create a project
         const createdProject1 = await ProjectRepository.createProject(
-            new CreateProjectDto('PROJ-001', 'Awesome Project', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
+            new CreateProjectDto('Awesome Project', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
         );
         console.log('New project created:', createdProject1);
 
 
         const createdProject2 = await ProjectRepository.createProject(
-            new CreateProjectDto('PROJ-001', 'Awesome Project', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
+            new CreateProjectDto('Awesome Project22', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
         );
         console.log('New project created:', createdProject2);
 
@@ -130,13 +125,13 @@ async function runDemo() {
 
         // Create a task
         const createdTask1 = await TaskRepository.createTask(
-            new CreateTaskDto('TASK-001', 'Implement Feature X', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature X', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask1);
 
 
         const createdTask2 = await TaskRepository.createTask(
-            new CreateTaskDto('TASK-001', 'Implement Feature X', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature TEST', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask2);
 
@@ -149,7 +144,6 @@ async function runDemo() {
 
         // Update task
         const updatedTaskDto = await TaskRepository.updateTaskById(taskId, {
-            taskKey: 'TASK-002',
             title: 'Implement Feature Y',
             description: 'Medium',
             priority: 'Implement another feature with medium priority',
@@ -167,15 +161,13 @@ async function runDemo() {
 
         const tasksByProjectId = await TaskRepository.getAllTasksByProjectId(3);
         console.log('All tasks by project ID:', tasksByProjectId);
-        } catch (error) {
+    } catch (error) {
         console.error('An error occurred:', error);
     }
 
 
-
-
     console.log('-------------------------');
     console.log('-----END OF THE DEMO-----');
- }
+}
 
 //runDemo();

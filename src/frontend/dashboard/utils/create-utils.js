@@ -28,7 +28,6 @@ async function createNewTask(event) {
     //const projectNumber = urlParams.get('proj');
     const changed_status = modified_status.charAt(0).toUpperCase() + modified_status.slice(1);
     const task = {
-        "taskKey":"0",
         "title": form.querySelector('#create_title').value,
         "description": form.querySelector('#create_description').value,
         "priority": modified_priority,
