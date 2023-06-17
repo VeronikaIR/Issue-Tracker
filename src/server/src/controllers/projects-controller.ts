@@ -1,19 +1,21 @@
-import { IProject} from "../interfaces/projects";
+import {IProject} from "../interfaces/projects";
 import {parseProjectDtoToIProject} from "../utils/projects-utils";
 
 import {ProjectDto} from '../database/dtos/ProjectDto';
-import {ITicket} from "../interfaces/tickets";
+import {TicketController} from "./tickets-controller";
+
 const CreateProjectDto = require('../database/dtos/create/CreateProjectDto')
-const ProjectRepository = require('../database/repositories/ProjectRepository');
+const ProjectRepository = require('../database/repositories/ProjectRepository.js');
 
 export class ProjectController {
     private projectsCollection: IProject[];
 
-    constructor() {}
+    constructor() {
+    }
 
     public async init() {
         try {
-            const projects: IProject[] = await ProjectRepository.findAllProjects();
+            const projects: ProjectDto[] = await ProjectRepository.findAllProjects();
             console.log(projects);
             this.projectsCollection = projects.map((project) => {
                 console.log("Before: ");
@@ -29,8 +31,8 @@ export class ProjectController {
     };
 
 
-    public async getProjectsData(): Promise<IProject[]> {
-       return this.projectsCollection;
+    public async getProjectsData(): Promise<IProject[] | undefined> {
+        return this.projectsCollection;
     }
 
     public async getProjectByProjectKey(project_id: number): Promise<IProject | undefined> {
@@ -44,24 +46,47 @@ export class ProjectController {
         return parseProjectDtoToIProject(foundProject);
     }
 
-    public async getProjectsByUserId(userId: number): Promise<ITicket[]> {
+    private async getProjectsByUserId(userId: number): Promise<number[] | undefined> {
         const foundProjects = await ProjectRepository.getAllProjectsByUserId(userId);
 
+        console.log(foundProjects);
+
+        return foundProjects;
+    }
+
+    public async getAllProjectsByLeadAndAssignee(userId: number): Promise<IProject[] | undefined> {
+        const ticketController = new TicketController();
+        await ticketController.init();
+
+        const assigneeProjects = await ticketController.getAllProjectsByAssigneeId(Number(userId));
+        const leadProjects = await this.getProjectsByUserId(Number(userId));
+
+        console.log('12345');
+        let concatenatedArray: number[] = [];
+        assigneeProjects.forEach(assigneeProject =>{
+            concatenatedArray.push(assigneeProject);
+        })
+        leadProjects.forEach(leadProject=>{
+            concatenatedArray.push(leadProject);
+        })
+
+        console.log(concatenatedArray);
+        const foundProjects = await ProjectRepository.getAllProjectsFromList(concatenatedArray);
+        console.log("Found projects: \n");
         console.log(foundProjects);
 
         return foundProjects.map((project) => {
             console.log("Before: ");
             console.log(project);
-            const parsedObj = parseProjectDtoToIProject(project);
+            const parsedProject = parseProjectDtoToIProject(project);
             console.log("Parsed:");
-            console.log(parsedObj);
-            return parsedObj;
+            console.log(parsedProject);
+            return parsedProject;
         });
-
     }
 
 
-    public async addProject (project: IProject): Promise<IProject | undefined> {
+    public async addProject(project: IProject): Promise<IProject | undefined> {
         console.log(project);
 
         const newProject = new CreateProjectDto(project.name, project.description, project.creationDate, project.leadUserId);
@@ -72,7 +97,7 @@ export class ProjectController {
     };
 
     public async deleteProjectByProjectKey(project_num: string): Promise<void> {
-        const deleteProject:ProjectDto = await ProjectRepository.deleteProjectById(project_num);
+        const deleteProject: ProjectDto = await ProjectRepository.deleteProjectById(project_num);
         console.log("Delete project is: \n" + deleteProject);
     };
 

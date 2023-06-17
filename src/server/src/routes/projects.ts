@@ -4,6 +4,7 @@ import {IProject} from "../interfaces/projects";
 
 //Define tickets controller
 const projectsController: ProjectController = new ProjectController();
+
 const getProjectController = async (req: Request, res: Response, next: () => void) => {
     try {
         console.log('Controller initialization...');
@@ -52,7 +53,8 @@ projectsRouter.get('/projects-by-user/:user_id', async (request: Request, respon
     const {user_id} = request.params;
 
     try {
-        const projects = await projectsController.getProjectsByUserId(Number(user_id));
+
+        const projects = await projectsController.getAllProjectsByLeadAndAssignee(Number(user_id));
 
         if (projects.length > 0) {
             response.status(200).json(projects);

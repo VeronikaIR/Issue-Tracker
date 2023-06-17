@@ -12,6 +12,8 @@ const UserRepository = require('./database/repositories/UserRepository');
 const ProjectRepository = require('./database/repositories/ProjectRepository');
 const TaskRepository = require('./database/repositories/TaskRepository');
 
+const bcrypt = require('bcrypt');
+
 //Load database
 loadMigrations();
 
@@ -33,17 +35,18 @@ async function runDemo() {
         console.log('User Repository Demo');
         console.log('---------------------');
 
-
         // Create a user
+       const password1 = await bcrypt.hash('Test123!', 10);
         const createdUser1 = await UserRepository.createUser(
-            new CreateUserDto('John Doe', 'john1@example.com', 'hashed_password')
+            new CreateUserDto('John Doe', 'john1@example.com', password1)
         );
         console.log('New user created:', createdUser1);
 
 
         // Create a user
+        const password2 = await bcrypt.hash('Test1234!', 10);
         const createdUser2 = await UserRepository.createUser(
-            new CreateUserDto('John Doe', 'john2@example.com', 'hashed_password')
+            new CreateUserDto('John Doe', 'john2@example.com', password2)
         );
         console.log('New user created:', createdUser2);
 
@@ -78,13 +81,13 @@ async function runDemo() {
 
         // Create a project
         const createdProject1 = await ProjectRepository.createProject(
-            new CreateProjectDto('Awesome Project', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
+            new CreateProjectDto('Web Project', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
         );
         console.log('New project created:', createdProject1);
 
 
         const createdProject2 = await ProjectRepository.createProject(
-            new CreateProjectDto('Awesome Project22', 'An amazing project to showcase our skills', new Date(), createdUser1.id)
+            new CreateProjectDto('Awesome Project', 'An amazing project to showcase our coding skills', new Date(), createdUser2.id)
         );
         console.log('New project created:', createdProject2);
 
