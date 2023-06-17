@@ -1,6 +1,8 @@
 (function (){
 
-getProjectsData();
+    const userNumber = new URLSearchParams(window.location.search).get('user');
+
+    getProjectsData(userNumber);
 
     //create a new project
     const newTaskBtn = document.getElementById('new-button');
@@ -13,11 +15,5 @@ getProjectsData();
         await createNewProject(event);
     });
 
-    //delete a project
-    // const deleteBtns = document.querySelector('.delete');
-    //
-    // deleteBtns.forEach(deleteBtn=>{
-    //     deleteBtn.addEventListener('click', deleteProject);
-    // })
 
 }())

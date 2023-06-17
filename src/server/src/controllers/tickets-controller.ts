@@ -1,6 +1,8 @@
 import {ITicket} from "../interfaces/tickets";
 import {parsedInputTicket, parseTaskDtoToITicket} from "../utils/tickets-utils";
 import { TaskDto } from "../database/dtos/TaskDto";
+import {IProject} from "../interfaces/projects";
+import projects from "../routes/projects";
 
 const CreateTaskDto = require('../database/dtos/create/CreateTaskDto');
 
@@ -61,6 +63,14 @@ export class TicketController {
 
     };
 
+    public async getAllProjectsByAssigneeId(assigneeId: number): Promise<number[] | undefined> {
+       const projectsByAssignee = await TaskRepository.getAllProjectsByAssigneeId(assigneeId);
+       console.log("Assignee array: ");
+       console.log(projectsByAssignee);
+       return projectsByAssignee.map(task => {
+           return task.projectId;
+       });
+    }
 
     public async addTicket(ticket: ITicket): Promise<ITicket | undefined> {
         console.log(ticket);

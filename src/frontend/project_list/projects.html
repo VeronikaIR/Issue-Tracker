@@ -14,55 +14,48 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-<h1>Your Projects</h1>
-<table>
-  <thead>
-  <tr>
-    <th>#ID</th>
-    <th>Project</th>
-    <th>Description</th>
-    <th></th>
+<header id="top-bar">
+  <nav>
+    <a id ='logout_href' href='../login/login.html'>Logout</a>
+  </nav>
+</header>
+<main>
+  <h1>Your Projects</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>#ID</th>
+      <th>Project</th>
+      <th>Description</th>
+      <th></th>
 
-  </tr>
-  </thead>
-<tbody class="table-body">
-<!--  &lt;!&ndash; Example project rows &ndash;&gt;-->
-<!--   <tr>-->
-<!--      <td>1</td>-->
-<!--      <td class="project_name"> <a href="../dashboard/dashboard.html" >Project 1</a></td>-->
-<!--      <td>JavaScript Project for Issue Tracker</td>-->
-<!--      <td><button class="btn delete">update</button></td>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--      <td>4</td>-->
-<!--      <td class="project_name"><a  href="../dashboard/dashboard.html" >Project 2</a></td>-->
-<!--      <td>Java Project for Event Planning and Collaboration Tool</td>-->
-<!--      <td><button class="btn delete">update</button></td>-->
-<!--  </tr>-->
-</tbody>
-</table>
+    </tr>
+    </thead>
+    <tbody class="table-body">
 
-<form class="create_project" style="display:none;">
-  <div>
-    <label for="create_name">Create name:</label>
-    <input id="create_name" type="text" name="create_name">
-  </div>
+    </tbody>
+  </table>
 
-  <div>
-    <label for="create_description">Create description:</label>
-    <input id="create_description" type="text" name="create_description">
-  </div>
-  <div>
-    <label for="create_lead_user_id">Create lead user id:</label>
-    <input id="create_lead_user_id" type="number" name="create_lead_user_id">
-  </div>
-  <div>
-    <input id="create_new_project" type="submit" name="Create" value="Create">
-  </div>
-</form>
-<label id="message"></label>
-<footer>
-  <button id="new-button">New Project</button>
-</footer>
+  <form class="create_project" style="display:none;">
+    <div>
+      <label for="create_name">Create name:</label>
+      <input id="create_name" type="text" name="create_name">
+    </div>
+
+    <div>
+      <label for="create_description">Create description:</label>
+      <input id="create_description" type="text" name="create_description">
+    </div>
+
+    <div>
+      <input id="create_new_project" type="submit" name="Create" value="Create">
+    </div>
+  </form>
+  <label id="message"></label>
+  <footer>
+    <button id="new-button">New Project</button>
+  </footer>
+</main>
+
 </body>
 </html>
