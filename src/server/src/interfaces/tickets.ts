@@ -1,6 +1,5 @@
 export interface ITicket {
     id: number,
-    taskKey: string,
     title: string,
     description: string,
     priority: string;

@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS projects
 (
     id            SERIAL PRIMARY KEY,
-    project_key   VARCHAR(255) NOT NULL,
     name          VARCHAR(255) NOT NULL,
     description   TEXT,
     creation_date TIMESTAMP    NOT NULL,
@@ -22,7 +21,6 @@ CREATE TABLE IF NOT EXISTS projects
 CREATE TABLE IF NOT EXISTS tasks
 (
     id          SERIAL PRIMARY KEY,
-    task_key    VARCHAR(255) NOT NULL,
     title       VARCHAR(255) NOT NULL,
     description TEXT         NOT NULL,
     priority    TEXT         NOT NULL,

@@ -5,14 +5,14 @@ const TaskDto = require("../dtos/TaskDto");
 class ProjectRepository {
     async createProject(project) {
         const query = `
-            INSERT INTO projects (project_key, name, description, creation_date, lead_user_id)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO projects (name, description, creation_date, lead_user_id)
+            VALUES ($1, $2, $3, $4)
             RETURNING *
         `;
-        const values = [project.projectKey, project.name, project.description, project.creationDate, project.leadUserId];
+        const values = [project.name, project.description, project.creationDate, project.leadUserId];
         const { rows } = await db.pool.query(query, values);
 
-        return new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
+        return new ProjectDto(rows[0].id, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
     }
 
 
@@ -25,7 +25,7 @@ class ProjectRepository {
         `;
         const values = [id];
         const { rows } = await db.pool.query(query, values);
-        return new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
+        return new ProjectDto(rows[0].id, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
     }
 
     async findAllProjects() {
@@ -36,7 +36,7 @@ class ProjectRepository {
         const { rows } = await db.pool.query(query);
         const projects = [];
         rows.forEach(row => {
-            const project = new ProjectDto(row.id, row.project_key, row.name, row.description, row.creation_date, row.lead_user_id);
+            const project = new ProjectDto(row.id, row.name, row.description, row.creation_date, row.lead_user_id);
             projects.push(project);
         });
         return projects;
@@ -52,7 +52,7 @@ class ProjectRepository {
         const {rows} = await db.pool.query(query, values);
 
         return rows.map(row => {
-            return new ProjectDto(row.id, row.project_key, row.name, row.description, row.creation_date, row.lead_user_id);
+            return new ProjectDto(row.id, row.name, row.description, row.creation_date, row.lead_user_id);
         });
     }
 
@@ -66,7 +66,7 @@ class ProjectRepository {
         const values = [project.name, project.description, project.creationDate, project.leadUserId , id];
         const { rows } = await db.pool.query(query, values);
 
-        return new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
+        return new ProjectDto(rows[0].id, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
     }
 
     async deleteProjectById(id) {
@@ -78,7 +78,7 @@ class ProjectRepository {
         `;
         const values = [id];
         const { rows } = await db.pool.query(query, values);
-        return new ProjectDto(rows[0].id, rows[0].project_key, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
+        return new ProjectDto(rows[0].id, rows[0].name, rows[0].description, rows[0].creation_date, rows[0].lead_user_id);
     }
 }
 

@@ -65,7 +65,7 @@ export class TicketController {
     public async addTicket(ticket: ITicket): Promise<ITicket | undefined> {
         console.log(ticket);
 
-        const newTicket = new CreateTaskDto(ticket.taskKey, ticket.title, ticket.description,
+        const newTicket = new CreateTaskDto(ticket.title, ticket.description,
             ticket.priority, ticket.dueDate, ticket.status, ticket.projectId, ticket.assigneeId);
 
         console.log(newTicket);

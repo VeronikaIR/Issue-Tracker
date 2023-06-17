@@ -3,7 +3,6 @@ import {IProject} from "../interfaces/projects";
 export function parseProjectDtoToIProject(project): IProject {
     return {
         id: project.id,
-        projectKey: project.projectKey,
         name: project.name,
         description: project.description,
         creationDate: project.creationDate,
