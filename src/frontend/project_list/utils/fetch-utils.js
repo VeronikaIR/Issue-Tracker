@@ -7,7 +7,12 @@ const sendRequest = async (url, options, successCallback, errorCallback) => {
             const data = await result.json();
     
             successCallback(data);
-        } else {
+        }
+        else if(status === 404 && options.method === 'GET')
+        {
+            errorCallback('User does not have any projects!');
+        }
+        else {
             const error = await result.json();
     
             errorCallback(error);    

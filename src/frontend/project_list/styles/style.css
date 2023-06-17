@@ -8,6 +8,22 @@
     --light-color: #f8f9fab9;
     --dark-color: black;
 }
+#top-bar nav {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#top-bar nav a {
+    font-size: 18px;
+    padding: 8px 16px;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+#top-bar nav a:hover {
+    background-color: var(--light-color);
+}
+
 h1 {
     font-family: Arial, sans-serif;
     color: var(--secondary-color);

@@ -1,5 +1,5 @@
-const getProjectsData = () => {
-    const url = 'http://localhost:3000/projects';
+const getProjectsData = (userId) => {
+    const url = `http://localhost:3000/projects/projects-by-user/${userId}`;
 
     const options = {
         method: 'GET',
