@@ -12,7 +12,7 @@ const getUsersController = async (request: Request, response: Response, next: ()
         next();
     } catch (error) {
         console.error(error);
-        response.status(500).json({error: 'Internal server error'});
+        response.status(500).json({message: error.message});
     }
 };
 
@@ -45,7 +45,7 @@ usersRouter.post('/register', validateUser, async (request, response) => {
             response.status(400).json('User was not created.');
         }
     } catch (error) {
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -60,10 +60,8 @@ usersRouter.get('/login', async (request, response) => {
             response.status(400).json("Invalid email or password");
         }
     } catch (error) {
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 })
-
-// module.exports = { usersRouter };
 
 export default usersRouter;

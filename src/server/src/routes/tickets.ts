@@ -28,7 +28,7 @@ ticketsRouter.get('/', async (request: Request, response: Response) => {
         response.status(200).json(tickets);
     } catch (error) {
         console.error(error);
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -45,7 +45,7 @@ ticketsRouter.get('/:task_key', async (request: Request, response: Response) => 
         }
     } catch (error) {
         console.error(error);
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -62,7 +62,7 @@ ticketsRouter.get('/tickets-by-project/:project_key', async (request: Request, r
         }
     } catch (error) {
         console.error(error);
-        response.status(500).json('Internal server error');
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -76,7 +76,7 @@ ticketsRouter.post('/', async (request: Request, response: Response) => {
         response.status(201).json(createdTicker);
     } catch (error) {
         console.error(error);
-        response.status(500).json({error: "Internal server error"});
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -93,7 +93,7 @@ ticketsRouter.patch('/:task_key', async (request: Request, response: Response) =
     } catch (error) {
         console.error(error);
 
-        response.status(500).json({error: 'Internal server error'});
+        response.status(500).json({message: error.message});
     }
 });
 
@@ -107,7 +107,7 @@ ticketsRouter.delete('/:task_key', async (request: Request, response: Response) 
     } catch (error) {
         console.error(error);
 
-        response.status(500).json({error: 'Internal server error'});
+        response.status(500).json({message: error.message});
     }
 });
 

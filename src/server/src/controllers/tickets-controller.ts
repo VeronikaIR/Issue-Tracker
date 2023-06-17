@@ -89,7 +89,7 @@ export class TicketController {
 
         const newTicket = parsedInputTicket(foundTicket, inputTicket);
 
-        console.log("!!!!!!!!!!New ticket: ");
+        console.log("!New ticket: ");
         console.log(newTicket);
         const updatedTicket: TaskDto = await TaskRepository.updateTaskById(taskKey, newTicket);
 

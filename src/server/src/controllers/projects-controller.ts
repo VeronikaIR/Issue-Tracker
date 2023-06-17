@@ -37,6 +37,9 @@ export class ProjectController {
         const foundProject = await ProjectRepository.getProjectById(project_id);
 
         console.log(foundProject);
+        if (!foundProject) {
+            throw new Error("There is no projects with this id found!");
+        }
 
         return parseProjectDtoToIProject(foundProject);
     }
