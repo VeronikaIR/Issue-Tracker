@@ -55,22 +55,6 @@ async function runDemo() {
         const userId = createdUser2.id;
         const retrievedUserDto = await UserRepository.getUserById(userId);
         console.log('Retrieved user:', retrievedUserDto);
-
-
-        // Update user
-        const updatedUserDto = await UserRepository.updateUserById(userId, {
-            name: 'John Smith',
-            email: 'john.smith@example.com',
-            hashedPassword: 'new_password'
-        });
-        console.log('Updated user:', updatedUserDto);
-
-
-        // Delete user
-        const deletedUserDto = await UserRepository.deleteUserById(userId);
-        console.log('Deleted user:', deletedUserDto);
-
-
         console.log('\n');
 
 
@@ -102,25 +86,6 @@ async function runDemo() {
         const allProjects = await ProjectRepository.findAllProjects();
         console.log('All projects:', allProjects);
 
-
-        // Update project
-        const updatedProjectDto = await ProjectRepository.updateProjectById(projectId, {
-            name: 'Updated Project',
-            description: 'An updated project with new features',
-            creationDate: new Date(),
-            leadUserId: createdUser1.id
-        });
-        console.log('Updated project:', updatedProjectDto);
-
-
-        // Delete project
-        const deletedProjectDto = await ProjectRepository.deleteProjectById(projectId);
-        console.log('Deleted project:', deletedProjectDto);
-
-
-        console.log('\n');
-
-
         // Task Repository Demo
         console.log('Task Repository Demo');
         console.log('---------------------');
@@ -128,13 +93,13 @@ async function runDemo() {
 
         // Create a task
         const createdTask1 = await TaskRepository.createTask(
-            new CreateTaskDto('Implement Feature X', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature X', 'Implement the new feature with the specified requirements', 'Low', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask1);
 
 
         const createdTask2 = await TaskRepository.createTask(
-            new CreateTaskDto('Implement Feature TEST', 'High', 'Implement the new feature with the specified requirements', new Date(), 'In Progress', createdProject1.id, createdUser1.id)
+            new CreateTaskDto('Implement Feature TEST', 'Implement the new feature with the specified requirements', 'High',new Date(), 'In Progress', createdProject1.id, createdUser1.id)
         );
         console.log('New task created:', createdTask2);
 
@@ -143,24 +108,6 @@ async function runDemo() {
         const taskId = createdTask2.id;
         const retrievedTaskDto = await TaskRepository.getTaskById(taskId);
         console.log('Retrieved task:', retrievedTaskDto);
-
-
-        // Update task
-        const updatedTaskDto = await TaskRepository.updateTaskById(taskId, {
-            title: 'Implement Feature Y',
-            description: 'Medium',
-            priority: 'Implement another feature with medium priority',
-            dueDate: new Date(),
-            status: 'In Progress',
-            projectId: createdProject1.id,
-            assigneeId: createdUser1.id
-        });
-        console.log('Updated task:', updatedTaskDto);
-
-
-        // Delete task
-        // const deletedTaskDto = await TaskRepository.deleteTaskById(taskId);
-        // console.log('Deleted task:', deletedTaskDto);
 
         const tasksByProjectId = await TaskRepository.getAllTasksByProjectId(3);
         console.log('All tasks by project ID:', tasksByProjectId);
@@ -173,4 +120,4 @@ async function runDemo() {
     console.log('-----END OF THE DEMO-----');
 }
 
-// runDemo();
+//runDemo();

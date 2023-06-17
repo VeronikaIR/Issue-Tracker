@@ -46,12 +46,6 @@ async function createNewTask(event) {
         console.error('Error:', error);
         return;
     }
-     //  sendTicketData(task).then(data=>{
-     //    id = data.id;
-     // }).catch((error) => {
-     //    console.error('Error:', error);
-     //  });
-    //file.tasks.push(task);
 
     const tr_task = document.createElement('tr');
 
@@ -116,5 +110,4 @@ async function createNewTask(event) {
     form.querySelector('#create_status').value = 'nothing';
     form.querySelector('#create_assignee_id').value = '';
 
-    //footer.removeChild(form);
 }

@@ -132,7 +132,7 @@ function DeleteTask(event) {
     event.preventDefault();
     const form = document.querySelector(".update_ticket_info");
     const ticket_id = form.querySelector('#take_id').innerHTML;
-  //  const ticket = file.tasks.filter(task => task.id === ticket_id)[0];
+
     const current_status = form.querySelector('#take_status').innerHTML;
     let parent_section;
     let parent_table;
@@ -167,7 +167,7 @@ function DeleteTask(event) {
 
     const modifiedId = ticket_id.replace(/\D/g, '');
     deleteTicketByTaskKey(modifiedId);
-   // file.tasks = file.tasks.filter(task => task.id !== ticket_id);
+
 
     form.style.display = 'none';
 
