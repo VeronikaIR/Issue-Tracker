@@ -44,19 +44,3 @@ const deleteProjectByProjectKey = project_key => {
 
     sendRequest(url, options, handleSuccessMessage, handleError);
 };
-
-
-// const getProjectDataByProjectNumber = async (project_key) => {
-//     const url = `http://localhost:3000/projects/${project_key}`;
-//
-//     const options = {
-//         method: 'GET',
-//         mode: 'cors',
-//         credentials: 'same-origin',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
-//
-//     return await sendAndReturnRequest(url, options, showTicket, handleError);
-// };

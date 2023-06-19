@@ -25,13 +25,12 @@ async function createNewTask(event) {
     });
 
     const projectNumber = new URLSearchParams(window.location.search).get('proj');
-    //const projectNumber = urlParams.get('proj');
     const changed_status = modified_status.charAt(0).toUpperCase() + modified_status.slice(1);
     const task = {
         "title": form.querySelector('#create_title').value,
         "description": form.querySelector('#create_description').value,
         "priority": modified_priority,
-        "dueDate": (form.querySelector('#create_due_date').value).split('T')[0],
+        "dueDate": form.querySelector('#create_due_date').value,
         "status": changed_status,
         "projectId": Number(projectNumber),
         "assigneeId": Number(form.querySelector('#create_assignee_id').value)

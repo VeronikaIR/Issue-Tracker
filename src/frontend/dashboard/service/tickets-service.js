@@ -1,7 +1,3 @@
-// const sendRequest = require('../utils/fetch-utils');
-// const showtickets = require('../utils/show-tickets');
-// const handleError = require('../utils/handle-error');
-
 const getTicketsData = (project_key) => {
     const url = `http://localhost:3000/tickets/tickets-by-project/${project_key}`;
 
@@ -79,5 +75,3 @@ const deleteTicketByTaskKey = ticket_key => {
 
     sendRequest(url, options, handleSuccessMessage, handleError);
 };
-
-// module.exports = { getticketsData };
