@@ -52,7 +52,7 @@ async function createNewProject(event)
     const a_project = document.createElement('a');
     const take_id = id.split('-')[1];
 
-    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${take_id}`);
+    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${take_id}&user=${userNumber}`);
     a_project.innerHTML = project.name;
     td_project_name.append(a_project);
 

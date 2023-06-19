@@ -2,10 +2,11 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const projectNumber = urlParams.get('proj');
+    const userNumber = urlParams.get('user');
     getTicketsData(projectNumber);
 
     const proj_ref = document.getElementById('proj_href');
-    proj_ref.setAttribute('href', '../project_list/projects.html');
+    proj_ref.setAttribute('href', `../project_list/projects.html?user=${userNumber}`);
 
     //filters and order
     const btnSelectOrder = document.getElementById("select_order");
