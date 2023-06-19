@@ -25,7 +25,6 @@ async function createNewTask(event) {
     });
 
     const projectNumber = new URLSearchParams(window.location.search).get('proj');
-    console.log(form.querySelector('#create_due_date').value);
     const changed_status = modified_status.charAt(0).toUpperCase() + modified_status.slice(1);
     const task = {
         "title": form.querySelector('#create_title').value,
