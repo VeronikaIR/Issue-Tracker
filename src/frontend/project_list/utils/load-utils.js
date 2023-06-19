@@ -3,18 +3,20 @@ const showProjects = projectData => {
         appendProject(project);
     });
 };
-function appendProject(project)
-{
+
+function appendProject(project) {
+    const userNumber = new URLSearchParams(window.location.search).get('user');
+
     const tbody = document.querySelector('tbody');
 
     const tr = document.createElement('tr');
 
     const td_project_id = document.createElement('td');
-    td_project_id.innerHTML = 'PROJECT-'+ project.id;
+    td_project_id.innerHTML = 'PROJECT-' + project.id;
 
     const td_project_name = document.createElement('td');
     const a_project = document.createElement('a');
-    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${project.id}`);
+    a_project.setAttribute('href', `../dashboard/dashboard.html?proj=${project.id}&user=${userNumber}`);
     a_project.innerHTML = project.name;
     td_project_name.append(a_project);
 
