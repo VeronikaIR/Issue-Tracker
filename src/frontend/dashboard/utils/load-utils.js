@@ -66,4 +66,4 @@ function appendTicket(ticket)
         tableBody.append(tr_ticket);
 
     }
-};
+}

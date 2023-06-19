@@ -1,8 +1,6 @@
-
 function showTicket(data) {
     return data;
 }
-
 
 async function showInfoForTask(event) {
     event.preventDefault();
@@ -80,6 +78,5 @@ function hideTaskInfo(event) {
 
     const p_assignee_id = section.querySelector('#p_assignee_id');
     p_assignee_id.innerHTML = '';
-
 
 }
